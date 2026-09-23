@@ -1,0 +1,2765 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Wickenburg New Installs – 2026-09-23 – Solar Resource USA</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { height: 100%; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: #0f1117; color: #f0f0f0;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  /* ── Header ── */
+  .header {
+    text-align: center;
+    padding: 14px 16px 10px;
+    background: linear-gradient(135deg, #1a1f2e, #2d1a0d);
+    border-bottom: 1px solid #3a2a1e;
+  }
+  .logo { font-size: 11px; letter-spacing: 2px; color: #f59e0b; text-transform: uppercase; margin-bottom: 4px; }
+  .header h1 { font-size: 18px; font-weight: 700; color: #fff; }
+  .header .sub { font-size: 12px; color: #888; margin-top: 2px; }
+  .header .zone { font-size: 10px; color: #f59e0b; margin-top: 6px; background: #2d1a0d; padding: 3px 8px; border-radius: 6px; display: inline-block; }
+
+  /* ── Sync bar ── */
+  #sync-bar {
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+    background: #111827; border-bottom: 1px solid #1e293b;
+    padding: 6px 14px; font-size: 11px; color: #64748b;
+    min-height: 30px; transition: all 0.3s;
+  }
+  #sync-bar.saving  { background: #0a2540; color: #4fc3f7; }
+  #sync-bar.saved   { background: #0d2a0d; color: #66bb6a; }
+  #sync-bar.error   { background: #2a0f0f; color: #f87171; }
+
+  /* ── Stats bar ── */
+  .stats { display: flex; gap: 6px; padding: 8px; background: #0f1117; border-bottom: 1px solid #252d40; }
+  .stat {
+    flex: 1; background: #141926; border: 1px solid #252d40;
+    border-radius: 8px; padding: 6px; text-align: center;
+  }
+  .stat-num { font-size: 18px; font-weight: 800; color: #fff; }
+  .stat-num.green  { color: #66bb6a; }
+  .stat-num.orange { color: #ffa726; }
+  .stat-num.red    { color: #f87171; }
+  .stat-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.8px; color: #666; margin-top: 1px; }
+
+  /* ── Filter chips ── */
+  .filters {
+    display: flex; gap: 6px; flex-wrap: wrap; padding: 8px;
+    background: #0f1117; border-bottom: 1px solid #252d40; overflow-x: auto;
+  }
+  .fchip {
+    background: #1e2438; color: #8b95b3; border: 1.5px solid #2a3040;
+    border-radius: 16px; padding: 5px 10px; font-size: 11px; font-weight: 600;
+    cursor: pointer; font-family: inherit; -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0); transition: all 0.15s; white-space: nowrap;
+  }
+  .fchip.active { background: #3a2a0d; color: #f59e0b; border-color: #5c4a1e; }
+  .fchip.active.newleads { background: #0d2e2e; color: #2dd4bf; border-color: #1a5c5c; }
+  .fchip.newleads { background: #1e2438; color: #2dd4bf; border-color: #1a4040; }
+
+
+  /* ── Map ── */
+  #map { width: 100%; height: calc(100vh - 240px); min-height: 400px; background: #e8eef2; }
+
+  /* Custom pin colors by status */
+  .pin {
+    width: 28px; height: 28px; border-radius: 50% 50% 50% 0;
+    transform: rotate(-45deg); border: 2px solid #fff;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.5);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .pin-inner {
+    transform: rotate(45deg); color: #fff;
+    font-size: 12px; font-weight: 800;
+  }
+  .pin.bk-green  { background: #22c55e; }
+  .pin.bk-yellow { background: #f59e0b; }
+  .pin.bk-red    { background: #ef4444; }
+  .pin.bk-final  { background: #6b7280; }
+  .pin.bk-sold   { background: #3b82f6; }
+  .pin.bk-nih    { background: #a78bfa; }
+  .pin.bk-purple { background: #a855f7; box-shadow: 0 0 0 2px #fff, 0 0 8px #a855f7; }
+
+  /* ── Popup / detail sheet ── */
+  .leaflet-popup-content-wrapper {
+    background: #1a1f2e; color: #f0f0f0;
+    border: 1px solid #3a4556; border-radius: 12px;
+  }
+  .leaflet-popup-tip { background: #1a1f2e; border: 1px solid #3a4556; }
+  .leaflet-popup-content { margin: 10px; font-size: 12px; line-height: 1.5; }
+  .leaflet-popup-close-button { color: #888 !important; font-size: 18px !important; }
+
+  .detail {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #1a1f2e; border-top: 2px solid #f59e0b;
+    border-radius: 16px 16px 0 0;
+    padding: 14px 14px 20px; max-height: 60vh; overflow-y: auto;
+    transform: translateY(100%); transition: transform 0.25s;
+    z-index: 1000;
+  }
+  .detail.open { transform: translateY(0); }
+  .detail-close {
+    position: absolute; top: 10px; right: 12px;
+    background: none; border: none; color: #888;
+    font-size: 22px; cursor: pointer;
+  }
+  .detail-addr { font-size: 16px; font-weight: 700; color: #fff; padding-right: 30px; }
+  .detail-meta { font-size: 12px; color: #9aa3b8; margin-top: 4px; margin-bottom: 10px; }
+  .detail-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    font-size: 12px; padding: 5px 0; border-bottom: 1px solid #252d40;
+  }
+  .detail-row .k { color: #94a3b8; font-weight: 600; min-width: 100px; }
+  .detail-row .v { color: #e5e7eb; text-align: right; }
+  .detail-row .v.battery-yes { color: #66bb6a; font-weight: 700; }
+  .detail-row .v.battery-no  { color: #9ca3af; }
+
+  /* Notes textarea */
+  .notes-wrap { margin-top: 10px; }
+  .notes-wrap label { font-size: 10px; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.8px; }
+  .notes-wrap textarea {
+    width: 100%; min-height: 50px; margin-top: 4px;
+    background: #0d111c; color: #f0f0f0;
+    border: 1px solid #2a3040; border-radius: 8px;
+    padding: 8px; font-size: 13px; font-family: inherit; resize: vertical;
+  }
+
+  /* Outcome buttons */
+  .outcomes {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; margin-top: 10px;
+  }
+  .obtn {
+    background: #1e2438; color: #c4cde0; border: 1.5px solid #2a3040;
+    border-radius: 10px; padding: 8px 4px; font-size: 11px; font-weight: 700;
+    cursor: pointer; font-family: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,0); transition: all 0.15s;
+  }
+  .obtn.active.apptset  { background: #0d3b0d; color: #66bb6a; border-color: #2e6e2e; }
+  .obtn.active.notint   { background: #3b0d0d; color: #f87171; border-color: #6e2e2e; }
+  .obtn.active.hassolar { background: #0d2a3b; color: #4fc3f7; border-color: #1e4d7a; }
+  .obtn.active.renter   { background: #3b250d; color: #ffa726; border-color: #6e4e2e; }
+  .obtn.active.nih      { background: #2a0d3b; color: #a78bfa; border-color: #4d2e7a; }
+  .obtn.active.called   { background: #3b280d; color: #fbbf24; border-color: #7a5a1e; }
+  .obtn.active.notmoved { background: #251a3b; color: #c4b5fd; border-color: #4a3a7a; }
+  .obtn.active.soldu    { background: #0d3b2a; color: #6ee7b7; border-color: #2e6e58; }
+.obtn.active.goback   { background: #133a3f; color: #5eead4; border-color: #1f6b73; }
+.obtn.active.disq     { background: #2b2b2b; color: #9ca3af; border-color: #4b5563; }
+
+  /* Update button */
+  .update-btn {
+    width: 100%; margin-top: 12px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #fff; border: none; border-radius: 10px;
+    padding: 12px; font-size: 14px; font-weight: 800;
+    cursor: pointer; font-family: inherit;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+  }
+  .update-btn:active { transform: scale(0.98); }
+  .update-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+  /* Empty state */
+  .empty-state {
+    text-align: center; padding: 40px 20px;
+    color: #888; font-size: 13px; line-height: 1.6;
+  }
+  .empty-state h3 { color: #f59e0b; font-size: 16px; margin-bottom: 10px; }
+  .empty-state code {
+    background: #1e2438; padding: 2px 6px; border-radius: 4px;
+    font-size: 11px; color: #fbbf24;
+  }
+
+/* ---- live GPS position (Blake's blue dot) ---- */
+.me-dot{position:relative;width:18px;height:18px;border-radius:50%;background:#1a73e8;border:3px solid #fff;
+  box-shadow:0 0 0 1px rgba(0,0,0,.25),0 2px 6px rgba(0,0,0,.45);}
+.me-dot::after{content:'';position:absolute;left:50%;top:50%;width:18px;height:18px;margin:-9px 0 0 -9px;
+  border-radius:50%;background:rgba(26,115,232,.35);animation:mePulse 2s ease-out infinite;}
+@keyframes mePulse{0%{transform:scale(1);opacity:.7}100%{transform:scale(3.2);opacity:0}}
+.locate-btn{position:absolute;right:12px;bottom:96px;z-index:900;width:46px;height:46px;border-radius:50%;
+  border:none;background:#111827;color:#e5e7eb;font-size:21px;line-height:46px;text-align:center;
+  box-shadow:0 3px 10px rgba(0,0,0,.5);cursor:pointer;-webkit-tap-highlight-color:transparent;}
+.locate-btn.following{background:#1a73e8;color:#fff;}
+.locate-btn.err{background:#7f1d1d;color:#fff;}
+
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="logo">Solar Resource USA</div>
+  <h1>🏜 Tonopah AZ — Blake</h1>
+  <div class="sub">Maricopa County · Tonopah · Arlington · Buckeye · Wittmann · Morristown · APS</div>
+  <span class="zone">Map View · Permit Route · Refreshed 2026-07-28 · 79 leads · 11 new</span>
+</div>
+
+<div id="sync-bar">⏳ Loading state from GitHub…</div>
+
+<div class="stats">
+  <div class="stat"><div id="stat-total" class="stat-num">0</div><div class="stat-lbl">Total</div></div>
+  <div class="stat"><div id="stat-active" class="stat-num green">0</div><div class="stat-lbl">Active</div></div>
+  <div class="stat"><div id="stat-knocked" class="stat-num orange">0</div><div class="stat-lbl">Knocked</div></div>
+  <div class="stat"><div id="stat-remaining" class="stat-num red">0</div><div class="stat-lbl">Left</div></div>
+</div>
+
+<div class="filters" id="filters">
+  <button class="fchip active" data-filter="all">All</button>
+  <button class="fchip" data-filter="unknocked">Unknocked</button>
+  <button class="fchip" data-filter="green">🟢 Issued</button>
+  <button class="fchip" data-filter="yellow">🟡 In‑progress</button>
+  <button class="fchip" data-filter="red">🔴 Hot lead</button>
+  <button class="fchip" data-filter="purple">🟣 Has kW</button>
+  <button class="fchip" data-filter="nih">NIH</button>
+  <button class="fchip" data-filter="called">Called</button>
+  <button class="fchip newleads" data-filter="newleads">🆕 New Leads</button>
+  <button class="fchip" data-filter="hidden">🚫 Hidden</button>
+</div>
+
+<div id="map"></div>
+<button class="locate-btn" id="locateBtn" title="Show my location" onclick="toggleFollow()">◎</button>
+
+<!-- Detail sheet -->
+<div class="detail" id="detail">
+  <button class="detail-close" onclick="closeDetail()">×</button>
+  <div id="d-leadname" style="font-size:19px;font-weight:800;color:#f8fafc;line-height:1.2;margin:2px 40px 2px 0;">—</div>
+  <div id="d-leadtags" style="margin:0 0 6px 0;font-size:10px;"></div>
+  <div class="detail-addr" id="d-addr">—</div>
+  <div class="detail-meta" id="d-meta">—</div>
+
+  <div class="detail-row"><span class="k">Status</span><span class="v" id="d-status">—</span></div>
+  <div class="detail-row"><span class="k">Applied</span><span class="v" id="d-applied">—</span></div>
+  <div class="detail-row"><span class="k">Issued</span><span class="v" id="d-issued">—</span></div>
+  <div class="detail-row"><span class="k">Finaled</span><span class="v" id="d-finaled">—</span></div>
+  <div class="detail-row"><span class="k">Contractor</span><span class="v" id="d-contractor">—</span></div>
+  <div class="detail-row"><span class="k">License (ROC#)</span><span class="v" id="d-license">—</span></div>
+  <div class="detail-row"><span class="k">Contractor phone</span><span class="v" id="d-contractor-phone">—</span></div>
+  <div class="detail-row"><span class="k">Contractor email</span><span class="v" id="d-contractor-email">—</span></div>
+  <div class="detail-row"><span class="k">Permit valuation</span><span class="v" id="d-valuation" style="font-weight:700;color:#fbbf24">—</span></div>
+  <div class="detail-row"><span class="k">Est. system size</span><span class="v" id="d-size" style="color:#94a3b8;font-style:italic">—</span></div>
+  <div class="detail-row"><span class="k">Battery</span><span class="v" id="d-battery">—</span></div>
+  <div class="detail-row"><span class="k">Homeowner</span><span class="v" id="d-owner" style="font-weight:700">—</span></div>
+  <div class="detail-row"><span class="k">Owner type</span><span class="v" id="d-owner-type">—</span></div>
+  <div class="detail-row"><span class="k">Mailing address</span><span class="v" id="d-mailing">—</span></div>
+  <div class="detail-row"><span class="k">Owner-occupied</span><span class="v" id="d-occupied">—</span></div>
+  <div class="detail-row"><span class="k">Lot size</span><span class="v" id="d-lot">—</span></div>
+  <div id="d-vesting-wrap" style="margin-top:8px;padding:7px 9px;background:#0d111c;border:1px solid #252d40;border-left:3px solid #6366f1;border-radius:8px;">
+    <div style="font-size:10px;text-transform:uppercase;color:#94a3b8;letter-spacing:0.8px;margin-bottom:3px;">&#128203; Title / Vesting (as recorded)</div>
+    <div id="d-vesting" style="font-size:12px;color:#e5e7eb;">—</div>
+    <div id="d-vesting-type" style="font-size:10px;color:#94a3b8;margin-top:2px;"></div>
+  </div>
+  <div class="detail-row"><span class="k">Last sold</span><span class="v" id="d-last-sold">—</span></div>
+  <div class="detail-row"><span class="k">Parcel</span><span class="v" id="d-parcel">—</span></div>
+  <div class="detail-row"><span class="k">Parcel type</span><span class="v" id="d-parcel-type">—</span></div>
+  <div class="detail-row"><span class="k">Satellite check</span><span class="v" id="d-sat">—</span></div>
+  <div id="d-sat-note" style="font-size: 10px; color: #94a3b8; margin-top: 4px; padding: 6px 8px; background: #0d111c; border-left: 2px solid #f59e0b; border-radius: 4px; display: none;"></div>
+
+  <div style="margin-top: 10px;">
+    <div style="font-size: 10px; text-transform: uppercase; color: #94a3b8; letter-spacing: 0.8px; margin-bottom: 4px;">Permit Description</div>
+    <div id="d-description" style="font-size: 11px; color: #cbd5e1; background: #0d111c; border: 1px solid #252d40; border-radius: 8px; padding: 8px; line-height: 1.5; max-height: 120px; overflow-y: auto;">—</div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; margin-top: 10px;">
+    <a id="d-apple" target="_blank" style="background: #1e2438; color: #e5e7eb; border: 1.5px solid #2a3040; border-radius: 10px; padding: 8px 4px; font-size: 11px; font-weight: 700; text-align: center; text-decoration: none;">🗺 Apple Maps</a>
+    <a id="d-gsat" target="_blank" style="background: #1e2438; color: #e5e7eb; border: 1.5px solid #2a3040; border-radius: 10px; padding: 8px 4px; font-size: 11px; font-weight: 700; text-align: center; text-decoration: none;">🛰 Google Satellite</a>
+  </div>
+
+  <div class="notes-wrap">
+    <label>Notes</label>
+    <textarea id="d-notes" placeholder="Notes from door conversation…"></textarea>
+  </div>
+
+  <div class="outcomes">
+    <button class="obtn" data-outcome="apptset">Appt Set</button>
+    <button class="obtn" data-outcome="notint">Not Interested</button>
+    <button class="obtn" data-outcome="hassolar">Has Solar</button>
+    <button class="obtn" data-outcome="renter">Renter</button>
+    <button class="obtn" data-outcome="nih">NIH</button>
+    <button class="obtn" data-outcome="called">Called Back</button>
+    <button class="obtn" data-outcome="notmoved">Not Moved In</button>
+  <button class="obtn" data-outcome="goback">Go Back</button>
+  <button class="obtn" data-outcome="disq">Disqualified</button>
+    <button class="obtn" data-outcome="soldu">SOLD 🎉</button>
+  </div>
+
+  <button class="update-btn" id="update-btn" onclick="saveAndPush()">💾 Update</button>
+</div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+/* ============================================================================
+   Tonopah AZ — Blake's permit map (Map View, Leaflet)
+   Territory: Maricopa County, zip 85354 (Tonopah, AZ)
+   Utility: APS (Arizona Public Service)
+   Portal: Maricopa County Permit Center (Accela) + PermitViewer for historical
+   ============================================================================ */
+
+// ── Territory config ──
+const TERRITORY = {
+  name: 'Tonopah AZ',
+  zips: ['85354', '85322', '85326', '85361', '85342'],
+  // 85354 Tonopah · 85322 Arlington · 85326 Buckeye · 85361 Wittmann · 85342 Morristown
+  center: [33.97, -112.73],
+  zoom: 12,
+  county: 'Maricopa',
+  utility: 'APS',
+};
+
+// ── GitHub sync config (shared repo, per-territory state file) ──
+const GITHUB_REPO   = 'SolarResourceUSA/wickenburg-route';
+const GITHUB_BRANCH = 'main';
+const STATE_FILE    = 'wickenburg-permit-state.json';
+const LS_KEY        = 'srusa-wickenburg-v1';
+const PAT_LS_KEY    = 'srusa-gh-pat';
+// PAT is NOT embedded (GitHub secret scanning blocks that). Reads use the
+// public raw.githubusercontent.com endpoint (no auth). Writes use a token
+// supplied either via the URL fragment (#t=...) on first visit or cached in
+// localStorage from a prior visit. Reps never have to type anything — Ryan
+// sends a bookmarkable link, they tap it, token installs silently.
+(function installTokenFromHash() {
+  try {
+    const hash = window.location.hash || '';
+    const m = hash.match(/[#&]t=([^&]+)/);
+    if (m && m[1]) {
+      localStorage.setItem(PAT_LS_KEY, decodeURIComponent(m[1]).trim());
+      // Strip the token out of the URL so it's not sitting in the address bar.
+      const cleanHash = hash.replace(/[#&]t=[^&]+/, '').replace(/^#&/, '#');
+      const cleanUrl = window.location.pathname + window.location.search + (cleanHash === '#' ? '' : cleanHash);
+      window.history.replaceState({}, '', cleanUrl);
+    }
+  } catch (e) { /* best effort */ }
+})();
+function getGitHubPAT() {
+  let pat = localStorage.getItem(PAT_LS_KEY) || '';
+  if (!pat) {
+    pat = window.prompt('Enter the Solar Resource USA sync passcode (one time per device):') || '';
+    if (pat) localStorage.setItem(PAT_LS_KEY, pat.trim());
+  }
+  return pat.trim();
+}
+
+/* ============================================================================
+   PERMIT SEED DATA
+   ────────────────────────────────────────────────────────────────────────────
+   Populate this array with solar permits pulled from the Maricopa County
+   Permit Center (https://www.maricopa.gov/6003/Maricopa-Countys-Permit-Center)
+   filtered to zip 85354 (Tonopah) and the immediate area (Arlington 85322,
+   western Buckeye 85326 rural edges).
+
+   HARD RULES before adding a permit to this array:
+     1) EXCLUDE any permit that has passed final inspection (already installed)
+     2) SATELLITE-CHECK every rooftop — skip any that already show panels
+     3) Cross-reference tonopah-permit-state.json — skip if already worked
+
+   Required fields on every permit (per PROJECT-DIRECTION.md):
+     - id, address, lat, lng, status, issued, contractor, licenseROC,
+       systemKW, battery, owner, parcel, description
+   Description is the full verbatim text from the permit — captures battery
+   model, MPU upgrade specs, tap type, etc. Don't summarize.
+   ============================================================================ */
+const PERMITS_SEED = [
+ {
+  "id": "20260073",
+  "address": "1684 Verde Dr Wickenburg Az 85390",
+  "lat": 33.96082374901917,
+  "lng": -112.76477618078454,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-38-073A",
+  "valuation": 21000,
+  "systemKW": 15.0,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "MCCLANAHAN CAROL LYNN",
+  "vesting": "MCCLANAHAN CAROL LYNN",
+  "leadName": "Carol Lynn McClanahan",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "1684 VERDE DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2024-05-01",
+  "lastSoldPrice": 350000,
+  "recentBuyer": false,
+  "lotSize": "0.18 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,897 sq ft"
+   ],
+   [
+    "Year built",
+    "1974"
+   ],
+   [
+    "Lot",
+    "0.18 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$278,000"
+   ],
+   [
+    "Permit scope",
+    "NEW ENERGY STORAGE SYSTEM (15 KWH)"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50538073A",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
+  "playType": "Battery add-on \u2014 home already has solar",
+  "contractor": "Capital Energy LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260035",
+  "address": "1770 Yance Dr Wickenburg Az 85390",
+  "lat": 33.97757138862288,
+  "lng": -112.76699067991764,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-05-176",
+  "valuation": 37094.8,
+  "systemKW": 8.36,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "LOWERY ROY/RHONDA",
+  "vesting": "LOWERY ROY/RHONDA",
+  "leadName": "Roy & Rhonda Lowery",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "1770 YANCE DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2025-12-01",
+  "lastSoldPrice": 364790,
+  "recentBuyer": true,
+  "lotSize": "0.28 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,815 sq ft"
+   ],
+   [
+    "Year built",
+    "2026"
+   ],
+   [
+    "Lot",
+    "0.28 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$289,800"
+   ],
+   [
+    "Permit scope",
+    "Installation of a 8.360 kW rooftop mounted photovoltaic syst"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50505176",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "Sun Solar Solutions Inc",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260339",
+  "address": "2005 W Highridge Rd Wickenburg Az 85390",
+  "lat": 33.96763254737914,
+  "lng": -112.77209819598039,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-40-178",
+  "valuation": 20200,
+  "systemKW": 9.02,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "PIERCE MICHAEL J/EVELYN",
+  "vesting": "PIERCE MICHAEL J/EVELYN",
+  "leadName": "Michael Pierce",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "2005 W HIGHRIDGE RD, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2020-11-01",
+  "lastSoldPrice": 535000,
+  "recentBuyer": false,
+  "lotSize": "1.34 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,788 sq ft"
+   ],
+   [
+    "Year built",
+    "2005"
+   ],
+   [
+    "Lot",
+    "1.34 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "Pool",
+    "Yes"
+   ],
+   [
+    "County value",
+    "$678,200"
+   ],
+   [
+    "Permit scope",
+    "Installation of a Roof Mount 9.02 kW Solar System with one ("
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540178",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260321",
+  "address": "2360 Grantham Hills Trail Wickenburg Az 85390",
+  "lat": 34.0049969,
+  "lng": -112.7536814,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-11-012B",
+  "valuation": 37928,
+  "systemKW": 7.04,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "The Bradbarrie Companies, LLC",
+  "vesting": "The Bradbarrie Companies, LLC",
+  "leadName": "The Bradbarrie Companies, LLC",
+  "ownerType": "LLC",
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Permit scope",
+    "Installation of a 7.04kW PV System with a Tesla PowerWall3 a"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "Icon Power",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260166",
+  "address": "2390 Lupine Ln Wickenburg Az 85390",
+  "lat": 33.97032698913396,
+  "lng": -112.78141041968426,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-40-469",
+  "valuation": 58472.4,
+  "systemKW": 17.22,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "REVOCABLE TRUST OF JIM PRICE JR AND PEGGY ANNE PRICE",
+  "vesting": "REVOCABLE TRUST OF JIM PRICE JR AND PEGGY ANNE PRICE",
+  "leadName": "Jim & Peggy A. Price",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "2390 LUPINE LN, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2022-05-01",
+  "lastSoldPrice": 850000,
+  "recentBuyer": false,
+  "lotSize": "1.48 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,017 sq ft"
+   ],
+   [
+    "Year built",
+    "2005"
+   ],
+   [
+    "Lot",
+    "1.48 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$535,700"
+   ],
+   [
+    "Permit scope",
+    "Solar Install 17.22kW (42 Modules, 1 Inverter, 1 Battery)"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540469",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "Freedom Forever Arizona LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260353",
+  "address": "2705 W. Percheron Road Wickenburg Az 85390",
+  "lat": 33.968705541257094,
+  "lng": -112.78912942791547,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-41-103",
+  "valuation": 27900,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "owner": "MONTY BALDWIN TRUST",
+  "vesting": "MONTY BALDWIN TRUST",
+  "leadName": "Monty Baldwin Trust",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "PO BOX 1011, RENO NV 89504",
+  "ownerOccupied": false,
+  "lastSold": "2026-03-01",
+  "lastSoldPrice": 215000,
+  "recentBuyer": true,
+  "lotSize": "1.31 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Other / unclear"
+   ],
+   [
+    "Property type",
+    "VACANT RESIDENTIAL URBAN SUBDIVIDE"
+   ],
+   [
+    "Lot",
+    "1.31 ac"
+   ],
+   [
+    "County value",
+    "$117,700"
+   ],
+   [
+    "Permit scope",
+    "Ground-Mount Tracker"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50541103",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "Other / unclear",
+  "contractor": "EVX Solar",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260257",
+  "address": "29296 N 70Th Ave Wickenburg Az 85390",
+  "lat": 33.749688303726145,
+  "lng": -112.21117068708425,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-03-357",
+  "valuation": 14300,
+  "systemKW": 3.28,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "LI BAO-JHEN/FU KUAN-LIN",
+  "vesting": "LI BAO-JHEN/FU KUAN-LIN",
+  "leadName": "Terry J. Eberhardt & Cynthia D. Burgess-Eberhardt",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "29296 N 70TH AVE, PEORIA AZ 85383",
+  "ownerOccupied": true,
+  "lastSold": "2026-06-01",
+  "lastSoldPrice": 590000,
+  "recentBuyer": true,
+  "lotSize": "0.19 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,315 sq ft"
+   ],
+   [
+    "Year built",
+    "2018"
+   ],
+   [
+    "Lot",
+    "0.19 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$544,200"
+   ],
+   [
+    "Permit scope",
+    "Installation of a Roof Mount 3.28 kW Solar System with one ("
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20103357",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260210",
+  "address": "29789 N 71St Dr Wickenburg Az 85390",
+  "lat": 33.754653881260786,
+  "lng": -112.2129940952041,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-03-155",
+  "valuation": 14581,
+  "systemKW": 6.15,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "CRUZ ALBERT TOM/ELIZABETH MAY",
+  "vesting": "CRUZ ALBERT TOM/ELIZABETH MAY",
+  "leadName": "Stanley Krosnowski Jr. & Leslie Krosnowski",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "29789 N 71ST DR, PEORIA AZ 85383",
+  "ownerOccupied": true,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "0.18 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,165 sq ft"
+   ],
+   [
+    "Year built",
+    "2005"
+   ],
+   [
+    "Lot",
+    "0.18 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "Pool",
+    "Yes"
+   ],
+   [
+    "County value",
+    "$468,500"
+   ],
+   [
+    "Permit scope",
+    "Roof-mounted photovoltaic and energy storage system (6.150 K"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20103155",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "Capital Energy LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260044",
+  "address": "3246 Maverick Drive Wickenburg Az 85390",
+  "lat": 34.0225669,
+  "lng": -112.8005409,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-02-467A",
+  "valuation": 30000,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "Gregory C. & Kathryn L. Palmquist",
+  "vesting": "Gregory C. & Kathryn L. Palmquist",
+  "leadName": "Gregory C. & Kathryn L. Palmquist",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Permit scope",
+    "Installation of 3 backup batteries"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
+  "playType": "Battery add-on \u2014 home already has solar",
+  "contractor": "WNT LLC dba First Electric",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260158",
+  "address": "3616 Turquoise Trail Wickenburg Az 85390",
+  "lat": 34.043303,
+  "lng": -112.807844,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-03-215A",
+  "valuation": 27780,
+  "systemKW": 14.96,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "Bryan & Sheri Cloe",
+  "vesting": "Bryan & Sheri Cloe",
+  "leadName": "Bryan & Sheri Cloe",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Permit scope",
+    "Install 14.96 kW Solar System with Energy Storage"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "Green Muscle Solar LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260087",
+  "address": "4277 Greenhorn Way Wickenburg Az 85390",
+  "lat": 34.0392645,
+  "lng": -112.8066518,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-03-249A",
+  "valuation": 38400,
+  "systemKW": 14.08,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "Daniel J. & Melissa A. Subitch",
+  "vesting": "Daniel J. & Melissa A. Subitch",
+  "leadName": "Daniel J. & Melissa A. Subitch",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Permit scope",
+    "Roof mounted 14.08kW solar system with Tesla Powerwall 3 bat"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "United Energy Partners LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260011",
+  "address": "6942 W Buckhorn Trl Wickenburg Az 85390",
+  "lat": 33.73121718378047,
+  "lng": -112.20825129669358,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-31-180",
+  "valuation": 16600,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "YEH MIN LUN",
+  "vesting": "YEH MIN LUN",
+  "leadName": "Teresa Brown & Philip Carl Brown",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "6942 W BUCKHORN TRL, PEORIA AZ 85383",
+  "ownerOccupied": true,
+  "lastSold": "2025-12-01",
+  "lastSoldPrice": 610000,
+  "recentBuyer": true,
+  "lotSize": "0.15 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,084 sq ft"
+   ],
+   [
+    "Year built",
+    "2026"
+   ],
+   [
+    "Lot",
+    "0.15 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$549,700"
+   ],
+   [
+    "Permit scope",
+    "Installation of battery storage system."
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20131180",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
+  "playType": "Battery add-on \u2014 home already has solar",
+  "contractor": "Sun Solar Solutions Inc",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260213",
+  "address": "7142 W Nadine Way Wickenburg Az 85390",
+  "lat": 33.75252392231866,
+  "lng": -112.21332540379083,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "201-03-175",
+  "valuation": 27014,
+  "systemKW": 10.56,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "FIDEL GONZALEZ JR LIVING TRUST",
+  "vesting": "FIDEL GONZALEZ JR LIVING TRUST",
+  "leadName": "Ernest L. Decarlo",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "7142 W NADINE WAY, PEORIA AZ 85383",
+  "ownerOccupied": true,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "0.2 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,873 sq ft"
+   ],
+   [
+    "Year built",
+    "2005"
+   ],
+   [
+    "Lot",
+    "0.2 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "Pool",
+    "Yes"
+   ],
+   [
+    "County value",
+    "$524,300"
+   ],
+   [
+    "Permit scope",
+    "Installation of a 10.56kW PV System with a Tesla PowerWall3 "
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20103175",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "Icon Power",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260208",
+  "address": "720 Bralliar Rd Wickenburg Az 85390",
+  "lat": 33.981470586438995,
+  "lng": -112.74460838741018,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-07-038A",
+  "valuation": 13600,
+  "systemKW": 2.46,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "SCHNEIDER DIANA J",
+  "vesting": "SCHNEIDER DIANA J",
+  "leadName": "Diana J. Schneider",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "720 BRALLIAR RD, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2025-12-01",
+  "lastSoldPrice": 150000,
+  "recentBuyer": true,
+  "lotSize": "0.56 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 RURAL NON-SUBDIVID"
+   ],
+   [
+    "Livable area",
+    "1,895 sq ft"
+   ],
+   [
+    "Year built",
+    "1991"
+   ],
+   [
+    "Lot",
+    "0.56 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$384,500"
+   ],
+   [
+    "Permit scope",
+    "Installation of a Roof Mount 2.46 kW Solar System with one ("
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50507038A",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "New PV install",
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260139",
+  "address": "870 W Santa Fe Dr Wickenburg Az 85390",
+  "lat": 33.97310887713387,
+  "lng": -112.74686695564952,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-06-075",
+  "valuation": 24000,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "HUSEMANN FAMILY TRUST",
+  "vesting": "HUSEMANN FAMILY TRUST",
+  "leadName": "Husemann Family Trust",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "870 W SANTA FE DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "0.33 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,510 sq ft"
+   ],
+   [
+    "Year built",
+    "1996"
+   ],
+   [
+    "Lot",
+    "0.33 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$364,800"
+   ],
+   [
+    "Permit scope",
+    "Addition of a Tesla PowerWall3 and a Tesla Backup Safety Swi"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506075",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
+  "playType": "Battery add-on \u2014 home already has solar",
+  "contractor": "Icon Power",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260122",
+  "address": "875 N John Burden Ln Wickenburg Az 85390",
+  "lat": 33.975853997364226,
+  "lng": -112.72326440759355,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-12-023D",
+  "valuation": 57200,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "DOYLE FAMILY TRUST",
+  "vesting": "DOYLE FAMILY TRUST",
+  "leadName": "Doyle Family Trust",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "875 N JOHN BURDEN LN, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "2.02 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,663 sq ft"
+   ],
+   [
+    "Year built",
+    "1986"
+   ],
+   [
+    "Lot",
+    "2.02 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$434,700"
+   ],
+   [
+    "Permit scope",
+    "Installation of 2 battery storage systems and 2 battery syst"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50512023D",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
+  "playType": "Battery add-on \u2014 home already has solar",
+  "contractor": "Sun Solar Solutions Inc",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260354",
+  "address": "925 W Bralliar Rd Wickenburg Az 85390",
+  "lat": 33.980910016281186,
+  "lng": -112.74933654378266,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Applied \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "applied": null,
+  "issued": "",
+  "finaled": null,
+  "expire": null,
+  "ageDays": null,
+  "parcel": "505-06-001D",
+  "valuation": 26500,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "owner": "CRISSMAN SAMUEL/BRENDA",
+  "vesting": "CRISSMAN SAMUEL/BRENDA",
+  "leadName": "Samuel & Brenda Crissman",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "PO BOX 1360, WICKENBURG AZ 85358",
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "5.91 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Other / unclear"
+   ],
+   [
+    "Property type",
+    "SFR ON > 5 AC, URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "3,661 sq ft"
+   ],
+   [
+    "Year built",
+    "2025"
+   ],
+   [
+    "Lot",
+    "5.91 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$1,039,200"
+   ],
+   [
+    "Permit scope",
+    "Ground-Mount Tracker"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506001D",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
+  "playType": "Other / unclear",
+  "contractor": "EVX Solar",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true
+ },
+ {
+  "id": "20260308",
+  "address": "1220 Easy St Wickenburg Az 85390",
+  "lat": 33.98387300144685,
+  "lng": -112.76142530836348,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-07-06",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 79,
+  "parcel": "505-05-003Q",
+  "valuation": 7707,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "owner": "KUHNS JARED M/RANDI L",
+  "vesting": "KUHNS JARED M/RANDI L",
+  "leadName": "Jared M. & Randi L. Kuhns",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "1220 EASY ST, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2024-12-01",
+  "lastSoldPrice": 458285,
+  "recentBuyer": false,
+  "lotSize": "1.17 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Service / alteration \u2014 not a new install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 RURAL NON-SUBDIVID"
+   ],
+   [
+    "Livable area",
+    "1,632 sq ft"
+   ],
+   [
+    "Year built",
+    "1993"
+   ],
+   [
+    "Lot",
+    "1.17 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$400,500"
+   ],
+   [
+    "Permit scope",
+    "Sun Valley Solar to remove existing APS owned inverter and o"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50505003Q",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway. NOTE: service/alteration permit, not a new install.",
+  "playType": "Service / alteration \u2014 not a new install",
+  "contractor": "Sun Valley Solar Solutions LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260310",
+  "address": "2995 W Pinto Pl Wickenburg Az 85390",
+  "lat": 33.963381140336665,
+  "lng": -112.79213718936805,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-07-13",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 72,
+  "parcel": "505-40-235",
+  "valuation": 20000,
+  "systemKW": 8.8,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": false,
+  "batteryModel": null,
+  "owner": "WARRICK REVOCABLE TRUST",
+  "vesting": "WARRICK REVOCABLE TRUST",
+  "leadName": "Warrick Revocable Trust",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "2995 W PINTO PL, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2025-06-01",
+  "lastSoldPrice": 950000,
+  "recentBuyer": false,
+  "lotSize": "1.19 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 RURAL SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,542 sq ft"
+   ],
+   [
+    "Year built",
+    "2020"
+   ],
+   [
+    "Lot",
+    "1.19 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$864,000"
+   ],
+   [
+    "Permit scope",
+    "Installation of rooftop solar, system size 8.8kW"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540235",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway.",
+  "playType": "New PV install",
+  "contractor": "Aneva Solar LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260007",
+  "address": "3703 Desert Oasis Avenue Wickenburg Az 85390",
+  "lat": 34.0281113,
+  "lng": -112.797627,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-01-14",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 252,
+  "parcel": "201-02-853",
+  "valuation": 17556,
+  "systemKW": 8.36,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": false,
+  "batteryModel": null,
+  "owner": "Alan D. & Carol Jo Butler",
+  "vesting": "Alan D. & Carol Jo Butler",
+  "leadName": "Alan D. & Carol Jo Butler",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Permit scope",
+    "Install 8.36kW PV Solar"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway.",
+  "playType": "New PV install",
+  "contractor": "Bright Home Installations LLC dba Bright Home Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260225",
+  "address": "4502 Painted Wagon Way Wickenburg Az 85390",
+  "lat": 34.0438368,
+  "lng": -112.8081651,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-05-26",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 120,
+  "parcel": "201-03-198A",
+  "valuation": 16632,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "William & Deborah A. Longo",
+  "vesting": "William & Deborah A. Longo",
+  "leadName": "William & Deborah A. Longo",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Permit scope",
+    "Installation of roof mounted utility interactive PV and ESS"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway.",
+  "playType": "New PV install",
+  "contractor": "Bright Home Installations LLC dba Bright Home Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260115",
+  "address": "4565 Fletcher Court Wickenburg Az 85390",
+  "lat": 34.0439179,
+  "lng": -112.8042878,
+  "coordSource": "ROOFTOP",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-03-23",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 184,
+  "parcel": "201-31-244",
+  "valuation": 7911,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "Paul D. & Veronica D. Hackenbrack",
+  "vesting": "Paul D. & Veronica D. Hackenbrack",
+  "leadName": "Paul D. & Veronica D. Hackenbrack",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Service / alteration \u2014 not a new install"
+   ],
+   [
+    "Permit scope",
+    "Install Tesla Powerwall 3 with Tesla Expansion pack and a su"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway. NOTE: service/alteration permit, not a new install.",
+  "playType": "Service / alteration \u2014 not a new install",
+  "contractor": "Sun Valley Solar Solutions LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260314",
+  "address": "516 N Mariposa Dr Wickenburg Az 85390",
+  "lat": 33.97178007320417,
+  "lng": -112.7459211212393,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-07-15",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 70,
+  "parcel": "505-06-032",
+  "valuation": 14300,
+  "systemKW": 3.24,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "MCDONALD DOUG L",
+  "vesting": "MCDONALD DOUG L",
+  "leadName": "Doug L. McDonald",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "516 N MARIPOSA DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2020-01-01",
+  "lastSoldPrice": 260000,
+  "recentBuyer": false,
+  "lotSize": "0.42 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,420 sq ft"
+   ],
+   [
+    "Year built",
+    "1991"
+   ],
+   [
+    "Lot",
+    "0.42 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "Pool",
+    "Yes"
+   ],
+   [
+    "County value",
+    "$372,600"
+   ],
+   [
+    "Permit scope",
+    "Installation of a Roof Mount 3.24 kW Solar System with one ("
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506032",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway.",
+  "playType": "New PV install",
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260123",
+  "address": "721 Weaver St Wickenburg Az 85390",
+  "lat": 33.97478370974558,
+  "lng": -112.73285961187344,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-03-25",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 182,
+  "parcel": "505-09-063",
+  "valuation": 24250,
+  "systemKW": 14.35,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "owner": "MOYER AMANDA/FISHER JEREMY",
+  "vesting": "MOYER AMANDA/FISHER JEREMY",
+  "leadName": "Daniel Kaufman",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "721 WEAVER ST, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2022-01-01",
+  "lastSoldPrice": 195000,
+  "recentBuyer": false,
+  "lotSize": "0.16 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,051 sq ft"
+   ],
+   [
+    "Year built",
+    "1950"
+   ],
+   [
+    "Lot",
+    "0.16 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$204,700"
+   ],
+   [
+    "Permit scope",
+    "Installation of a Roof Mount 14.35 kW Solar System with one "
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50509063",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway.",
+  "playType": "New PV install",
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ },
+ {
+  "id": "20260288",
+  "address": "825 S 337Th Ave Wickenburg Az 85390",
+  "lat": 33.95779478403378,
+  "lng": -112.78420130512447,
+  "coordSource": "assessor parcel centroid",
+  "statusLabel": "Issued",
+  "status": "issued",
+  "bucket": "orange",
+  "applied": null,
+  "issued": "2026-06-18",
+  "finaled": null,
+  "expire": null,
+  "ageDays": 97,
+  "parcel": "505-40-017D",
+  "valuation": 14985,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "owner": "ANDERSON FAMILY TR",
+  "vesting": "ANDERSON FAMILY TR",
+  "leadName": "Anderson Family Trust",
+  "ownerType": "Trust",
+  "isTrust": true,
+  "mailingAddress": "PO BOX 20675, WICKENBURG AZ 85358",
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "1.67 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Service / alteration \u2014 not a new install"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 RURAL NON-SUBDIVID"
+   ],
+   [
+    "Livable area",
+    "2,472 sq ft"
+   ],
+   [
+    "Year built",
+    "1984"
+   ],
+   [
+    "Lot",
+    "1.67 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "Pool",
+    "Yes"
+   ],
+   [
+    "County value",
+    "$562,100"
+   ],
+   [
+    "Permit scope",
+    "This is a DC coupled system using the backup switch."
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540017D",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Permit issued \u2014 install may be underway. NOTE: service/alteration permit, not a new install.",
+  "playType": "Service / alteration \u2014 not a new install",
+  "contractor": "Sun Valley Solar Solutions LLC",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false
+ }
+];
+
+
+const NEW_LEAD_IDS = new Set(["20260035", "20260087", "20260158", "20260166", "20260208", "20260210", "20260213", "20260257", "20260321", "20260339"]);
+
+/* ============================================================================
+   STATE MANAGEMENT
+   ============================================================================ */
+let state = {
+  permits: [],   // seeded from PERMITS_SEED, merged with GitHub state
+  lastSync: null,
+};
+let currentDetailId = null;
+let activeFilter = 'all';
+const markers = {};
+
+/* ── Merge logic: GitHub state wins on per-permit basis ── */
+function mergePermits(seed, saved) {
+  // Seed wins on permit facts (status, dates, contractor, kW, valuation).
+  // Only Blake's field work carries over from tonopah-permit-state.json.
+  // Permits absent from the seed are NOT resurrected — a build that drops a
+  // lead (finaled, has-solar, renter, not-interested) must stay dropped.
+  const CARRY = ['outcome', 'outcomeDate', 'notes'];
+  const savedById = {};
+  (saved || []).forEach(p => { savedById[p.id] = p; });
+  return seed.map(s => {
+    const sv = savedById[s.id];
+    if (!sv) return { ...s };
+    const merged = { ...s };
+    CARRY.forEach(k => { if (sv[k] !== undefined && sv[k] !== null && sv[k] !== '') merged[k] = sv[k]; });
+    return merged;
+  });
+}
+
+/* ── Outcome exclusion rules (from PROJECT-DIRECTION.md) ── */
+const REMOVE_OUTCOMES = new Set(['apptset', 'notint', 'hassolar', 'renter', 'soldu', 'disq']);
+const SUPPRESS_30_DAYS = new Set(['notmoved']);
+// 'nih' / 'called' / 'goback' / blank → keep on route ('goback' means return later)
+function isActiveRoute(p) {
+  if (!p.outcome) return true;
+  if (REMOVE_OUTCOMES.has(p.outcome)) return false;
+  if (SUPPRESS_30_DAYS.has(p.outcome) && p.outcomeDate) {
+    const days = (Date.now() - new Date(p.outcomeDate).getTime()) / 86400000;
+    if (days < 30) return false;
+  }
+  return true;
+}
+
+/* ============================================================================
+   LOCAL + GITHUB SYNC
+   ─ Saves to localStorage instantly on every change
+   ─ Pushes to GitHub ONLY when user taps the 💾 Update button
+   ─ NO 1.5s debounce auto-push (removed per project direction)
+   ============================================================================ */
+function saveLocal() {
+  try {
+    localStorage.setItem(LS_KEY, JSON.stringify(state));
+  } catch (e) { console.warn('localStorage save failed', e); }
+}
+
+function scheduleSave() {
+  // Auto-push to GitHub disabled. localStorage saves instantly on every change,
+  // and GitHub push only fires when the user taps the 💾 Update button on a stop.
+  saveLocal();
+}
+
+function setSyncStatus(cls, msg) {
+  const bar = document.getElementById('sync-bar');
+  bar.className = '';
+  if (cls) bar.classList.add(cls);
+  bar.textContent = msg;
+}
+
+/* ── Disposition-safe merge ──────────────────────────────────────────────────
+   Field dispositions live in TWO places: the shared state file on GitHub and
+   this browser's localStorage (anything not yet pushed with the 💾 button).
+   Older builds let the GitHub copy overwrite localStorage on every page load,
+   which silently wiped un-pushed knocks. Now both are combined per permit id;
+   the record with the newer outcomeDate wins, ties go to this device.        */
+function readLocalSaved() {
+  try {
+    const local = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    return (local && local.permits) ? local.permits : [];
+  } catch { return []; }
+}
+function combineSaved(remote, local) {
+  const ts = p => (p && p.outcomeDate) ? Date.parse(p.outcomeDate) || 0 : 0;
+  const out = {};
+  [...(remote || []), ...(local || [])].forEach(p => {
+    if (!p || !p.id) return;
+    const prev = out[p.id];
+    if (!prev) { out[p.id] = { ...p }; return; }
+    const win  = ts(p) >= ts(prev) ? p : prev;
+    const lose = win === p ? prev : p;
+    out[p.id] = {
+      ...lose, ...win,
+      notes: (win.notes && win.notes.trim()) ? win.notes : (lose.notes || ''),
+    };
+  });
+  return Object.values(out);
+}
+
+async function loadFromGitHub() {
+  setSyncStatus('', '⏳ Loading state from GitHub…');
+  try {
+    // Public-repo read via raw CDN — no auth needed, bypasses CORS-token issues
+    const rawUrl = `https://raw.githubusercontent.com/${GITHUB_REPO}/${GITHUB_BRANCH}/${STATE_FILE}?t=${Date.now()}`;
+    const r = await fetch(rawUrl, { cache: 'no-store' });
+    if (r.status === 404) {
+      // No state file yet — keep whatever this device already has
+      state.permits = mergePermits(PERMITS_SEED, readLocalSaved());
+      setSyncStatus('saved', '✓ Using this device\u2019s saved knocks');
+      saveLocal();
+      return;
+    }
+    if (!r.ok) throw new Error('GitHub raw ' + r.status);
+    const content = await r.json();
+    state.permits = mergePermits(PERMITS_SEED, combineSaved(content.permits || [], readLocalSaved()));
+    state.lastSync = new Date().toISOString();
+    // Fetch current SHA separately (needed for PUT) — unauthenticated works on public repos
+    try {
+      const shaRes = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${STATE_FILE}?ref=${GITHUB_BRANCH}`, {
+        headers: { 'Accept': 'application/vnd.github.v3+json' }
+      });
+      if (shaRes.ok) {
+        const meta = await shaRes.json();
+        state._sha = meta.sha;
+      }
+    } catch {}
+    setSyncStatus('saved', `✓ Loaded ${state.permits.length} permits from GitHub`);
+    saveLocal();
+  } catch (e) {
+    console.error(e);
+    // Fall back to localStorage
+    try {
+      const local = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+      if (local && local.permits) {
+        state = local;
+        state.permits = mergePermits(PERMITS_SEED, local.permits);
+        setSyncStatus('error', '⚠ GitHub offline — using local cache');
+      } else {
+        state.permits = mergePermits(PERMITS_SEED, []);
+        setSyncStatus('error', '⚠ GitHub offline — starting fresh');
+      }
+    } catch {
+      state.permits = mergePermits(PERMITS_SEED, []);
+      setSyncStatus('error', '⚠ GitHub offline — starting fresh');
+    }
+  }
+}
+
+async function pushToGitHub() {
+  setSyncStatus('saving', '⬆ Pushing to GitHub…');
+  try {
+    const pat = getGitHubPAT();
+    if (!pat) {
+      setSyncStatus('error', '⚠ No sync passcode — saved locally only');
+      return;
+    }
+    const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${STATE_FILE}`;
+    const payload = {
+      permits: state.permits,
+      lastSync: new Date().toISOString(),
+      territory: TERRITORY.name,
+    };
+    const body = {
+      message: `Update ${STATE_FILE} — ${new Date().toLocaleString()}`,
+      content: btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2)))),
+      branch: GITHUB_BRANCH,
+    };
+    if (state._sha) body.sha = state._sha;
+    const r = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `token ${pat}`,
+        'Accept': 'application/vnd.github.v3+json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+    if (r.status === 401 || r.status === 403) {
+      // Bad passcode — clear cache so rep can re-enter
+      localStorage.removeItem(PAT_LS_KEY);
+      setSyncStatus('error', '⚠ Sync passcode rejected — tap again to re-enter');
+      return;
+    }
+    if (!r.ok) {
+      const txt = await r.text();
+      throw new Error('GitHub PUT ' + r.status + ' ' + txt);
+    }
+    const data = await r.json();
+    state._sha = data.content.sha;
+    state.lastSync = new Date().toISOString();
+    setSyncStatus('saved', '✓ Saved to GitHub');
+    saveLocal();
+  } catch (e) {
+    console.error(e);
+    setSyncStatus('error', '⚠ Push failed — saved locally');
+  }
+}
+
+/* ============================================================================
+   MAP + MARKERS
+   ============================================================================ */
+let map;
+function initMap() {
+  map = L.map('map', { zoomControl: true }).setView(TERRITORY.center, TERRITORY.zoom);
+  // Light, Apple-Maps-style tile layer (CartoDB Voyager)
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
+    maxZoom: 20,
+    attribution: '© OpenStreetMap © CARTO',
+    subdomains: 'abcd',
+  }).addTo(map);
+}
+
+function makePinIcon(bucket) {
+  const cls = 'bk-' + (bucket || 'red');
+  const glyphs = { green: 'I', yellow: '•', red: '!', final: '✓', sold: '$', nih: 'N', purple: 'kW' };
+  const glyph = glyphs[bucket] || '?';
+  return L.divIcon({
+    className: 'pin-wrap',
+    html: `<div class="pin ${cls}"><span class="pin-inner">${glyph}</span></div>`,
+    iconSize: [28, 28],
+    iconAnchor: [14, 28],
+  });
+}
+
+// Compute current age in days from the most recent meaningful date on the permit.
+// Falls back to p.ageDays (frozen at pull time) if no parseable date is present.
+function currentAgeDays(p) {
+  const src = p.issued || p.applied;
+  if (src) {
+    const d = new Date(src + 'T00:00:00');
+    if (!isNaN(d)) {
+      return Math.floor((Date.now() - d.getTime()) / 86400000);
+    }
+  }
+  return (typeof p.ageDays === 'number') ? p.ageDays : 0;
+}
+
+// Hot-window cutoff: issued permits older than this flip from green to red.
+const GREEN_MAX_AGE_DAYS = 60;
+
+function bucketForPin(p) {
+  // Outcome-driven pin recoloring
+  if (p.outcome === 'soldu') return 'sold';
+  if (p.outcome === 'notint' || p.outcome === 'renter' || p.outcome === 'hassolar' || p.outcome === 'apptset') return 'final';
+  if (p.outcome === 'nih') return 'nih';
+  // Verified system kW gets a purple pin so reps know we already have the size
+  if (p.systemKW) return 'purple';
+  // Status-driven hot-window rule: any issued permit within GREEN_MAX_AGE_DAYS of
+  // its issue date is green; older issued permits flip to red (homeowner likely
+  // already signed). This overrides seeded buckets because seed ageDays was
+  // originally computed from applied date, not issued date.
+  if (p.status === 'issued') {
+    return currentAgeDays(p) <= GREEN_MAX_AGE_DAYS ? 'green' : 'red';
+  }
+  return p.bucket || 'red';
+}
+
+function renderMarkers() {
+  // Clear existing
+  Object.values(markers).forEach(m => map.removeLayer(m));
+  Object.keys(markers).forEach(k => delete markers[k]);
+
+  const filtered = state.permits.filter(p => {
+    if (p.lat == null || p.lng == null) return false;
+    // "Hidden" bucket = not-interested leads. Show ONLY them in the Hidden view,
+    // and EXCLUDE them from every other view so Blake's list stays clean.
+    if (activeFilter === 'hidden') return p.outcome === 'notint';
+    if (p.outcome === 'notint') return false;
+    if (activeFilter === 'all') return true;
+    if (activeFilter === 'unknocked') return isActiveRoute(p) && !p.outcome;
+    if (activeFilter === 'green')  return bucketForPin(p) === 'green';
+    if (activeFilter === 'yellow') return bucketForPin(p) === 'yellow';
+    if (activeFilter === 'red')    return bucketForPin(p) === 'red';
+    if (activeFilter === 'purple') return !!p.systemKW;
+    if (activeFilter === 'nih') return p.outcome === 'nih';
+    if (activeFilter === 'called') return p.outcome === 'called';
+    if (activeFilter === 'newleads') return NEW_LEAD_IDS.has(p.id);
+    return true;
+  });
+
+  filtered.forEach(p => {
+    const m = L.marker([p.lat, p.lng], { icon: makePinIcon(bucketForPin(p)) })
+      .addTo(map)
+      .on('click', () => openDetail(p.id));
+    m.bindTooltip(p.address, { direction: 'top', offset: [0, -20], className: 'srusa-tooltip' });
+    markers[p.id] = m;
+  });
+
+  renderStats(filtered);
+}
+
+function renderStats(filtered) {
+  const total = state.permits.length;
+  const active = state.permits.filter(isActiveRoute).length;
+  const knocked = state.permits.filter(p => p.outcome).length;
+  const remaining = state.permits.filter(p => isActiveRoute(p) && !p.outcome).length;
+  document.getElementById('stat-total').textContent = total;
+  document.getElementById('stat-active').textContent = active;
+  document.getElementById('stat-knocked').textContent = knocked;
+  document.getElementById('stat-remaining').textContent = remaining;
+}
+
+/* ============================================================================
+   DETAIL SHEET
+   ============================================================================ */
+function openDetail(id) {
+  const p = state.permits.find(x => x.id === id);
+  if (!p) return;
+  currentDetailId = id;
+  document.getElementById('d-addr').textContent = p.address || '—';
+  document.getElementById('d-meta').textContent =
+    `${TERRITORY.name} · ${p.source || 'Maricopa County'}`;
+  document.getElementById('d-status').textContent = (p.status || '—').toUpperCase();
+  document.getElementById('d-applied').textContent = p.applied || '—';
+  document.getElementById('d-issued').textContent = p.issued || '—';
+  document.getElementById('d-finaled').textContent = p.finaled || '—';
+  document.getElementById('d-contractor').textContent = p.contractor || '—';
+  document.getElementById('d-license').textContent = p.licenseROC || '—';
+
+  // Contractor contact (tappable tel:/mailto: for quick intel / recruit)
+  const phEl = document.getElementById('d-contractor-phone');
+  if (p.contractorPhone) {
+    phEl.innerHTML = `<a href="tel:${p.contractorPhone}" style="color:#60a5fa;text-decoration:none">${p.contractorPhone}</a>`;
+  } else { phEl.textContent = '—'; }
+  const emEl = document.getElementById('d-contractor-email');
+  if (p.contractorEmail) {
+    emEl.innerHTML = `<a href="mailto:${p.contractorEmail}" style="color:#60a5fa;text-decoration:none;font-size:11px">${p.contractorEmail}</a>`;
+  } else { emEl.textContent = '—'; }
+
+  // Permit valuation (actual $) + kW estimate derived from valuation
+  const valEl = document.getElementById('d-valuation');
+  const sizeEl = document.getElementById('d-size');
+  if (p.valuation) {
+    valEl.textContent = '$' + p.valuation.toLocaleString();
+    // Rough kW estimate: AZ residential solar valuation ~$1.80–$2.20/W installed-cost basis.
+    // If battery included, subtract ~$10k battery cost before dividing.
+    const batteryOffset = p.battery ? 10000 : 0;
+    const pvVal = Math.max(2000, p.valuation - batteryOffset);
+    const estKW = Math.round(pvVal / 2000 * 2) / 2;  // nearest 0.5 kW
+    if (p.systemKW) {
+      // Actual kW from portal/PDF — show in crisp white, not muted
+      sizeEl.textContent = `${p.systemKW} kW`;
+      sizeEl.style.color = '#e5e7eb';
+      sizeEl.style.fontStyle = 'normal';
+      sizeEl.style.fontWeight = '700';
+    } else {
+      // Derived from valuation — stays muted + italic per CSS above
+      sizeEl.textContent = 'Not stated on permit';
+      sizeEl.title = 'County does not publish array size for these permits; valuation is not a reliable proxy.';
+    }
+  } else {
+    valEl.textContent = '—';
+    sizeEl.textContent = p.systemKW ? `${p.systemKW} kW` : '—';
+  }
+  const batteryEl = document.getElementById('d-battery');
+  if (p.battery) {
+    batteryEl.textContent = p.batteryModel || 'Yes';
+    batteryEl.className = 'v battery-yes';
+  } else if (p.battery === false) {
+    batteryEl.textContent = 'No';
+    batteryEl.className = 'v battery-no';
+  } else {
+    batteryEl.textContent = '—';
+    batteryEl.className = 'v';
+  }
+  const lead = p.leadName || p.vesting || p.owner || '—';
+  document.getElementById('d-owner').textContent = lead;
+  document.getElementById('d-leadname').textContent = lead;
+  const tagsEl = document.getElementById('d-leadtags');
+  let tags = '';
+  if (NEW_LEAD_IDS.has(p.id)) tags += '<span style="background:#0d2e2e;color:#5eead4;border:1px solid #134e4a;border-radius:5px;padding:1px 6px;margin-right:4px;">\ud83c\udd95 NEW</span>';
+  if (p.isTrust) tags += '<span style="background:#1e1b4b;color:#a5b4fc;border:1px solid #312e81;border-radius:5px;padding:1px 6px;margin-right:4px;">IN TRUST</span>';
+  if (p.ownerOccupied === false) tags += '<span style="background:#3a2a0d;color:#fbbf24;border:1px solid #5c3d0a;border-radius:5px;padding:1px 6px;margin-right:4px;">ABSENTEE</span>';
+  if (p.recentBuyer) tags += '<span style="background:#2e0d2e;color:#f0abfc;border:1px solid #5c0a5c;border-radius:5px;padding:1px 6px;">RECENT BUYER</span>';
+  tagsEl.innerHTML = tags;
+  (function(){
+    var host=document.getElementById('d-leadtags'); if(!host) return;
+    var old=document.getElementById('d-extrafacts'); if(old) old.remove();
+    if(!p.extraFacts||!p.extraFacts.length) return;
+    var d=document.createElement('div'); d.id='d-extrafacts';
+    d.style.cssText='margin-top:10px;padding-top:8px;border-top:1px solid #1f2937;display:grid;grid-template-columns:auto 1fr;gap:3px 12px;font-size:12px;';
+    p.extraFacts.forEach(function(f){
+      var k=document.createElement('div'); k.textContent=f[0]; k.style.cssText='color:#6b7280;';
+      var v=document.createElement('div'); v.textContent=f[1]; v.style.cssText='color:#d1d5db;';
+      d.appendChild(k); d.appendChild(v);
+    });
+    if(p.assessorLink){var a=document.createElement('a');a.href=p.assessorLink;a.target='_blank';a.textContent='County assessor record \u2197';a.style.cssText='grid-column:1/-1;color:#60a5fa;margin-top:6px;';d.appendChild(a);}
+    host.parentNode.insertBefore(d,host.nextSibling);
+  })();
+  const vEl = document.getElementById('d-vesting');
+  if (vEl) {
+    vEl.textContent = p.vesting || '—';
+    document.getElementById('d-vesting-type').textContent = p.ownerType ? ('Held as: ' + p.ownerType) : '';
+  }
+
+  // Owner type (flag Trust / LLC)
+  const otEl = document.getElementById('d-owner-type');
+  if (p.ownerType === 'Trust')      { otEl.innerHTML = '🏛 <span style="color:#c4b5fd">Trust</span>'; }
+  else if (p.ownerType === 'LLC')   { otEl.innerHTML = '🏢 <span style="color:#a78bfa">LLC</span>'; }
+  else if (p.ownerType)             { otEl.textContent = p.ownerType; }
+  else                              { otEl.textContent = '—'; }
+
+  // Last sold + recent buyer badge
+  const lsEl = document.getElementById('d-last-sold');
+  if (p.lastSold) {
+    const price = p.lastSoldPrice ? '$' + p.lastSoldPrice.toLocaleString() : '';
+    const fire = p.recentBuyer ? ' 🔥' : '';
+    lsEl.innerHTML = p.lastSold + (price ? ' · ' + price : '') + fire;
+    if (p.recentBuyer) lsEl.style.color = '#fbbf24';
+  } else {
+    lsEl.textContent = '—';
+    lsEl.style.color = '';
+  }
+
+  document.getElementById('d-parcel').textContent = p.parcel || '—';
+  document.getElementById('d-mailing').textContent = p.mailingAddress || '—';
+  const occEl = document.getElementById('d-occupied');
+  if (p.ownerOccupied === false) { occEl.textContent = 'No — ABSENTEE owner'; occEl.style.color = '#f59e0b'; }
+  else if (p.ownerOccupied === true) { occEl.textContent = 'Yes'; occEl.style.color = '#22c55e'; }
+  else { occEl.textContent = '—'; occEl.style.color = ''; }
+  document.getElementById('d-lot').textContent = p.lotSize ? (p.lotSize.toLocaleString()+' sq ft') : '—';
+
+  // Parcel type (flag Mobile Home)
+  const ptEl = document.getElementById('d-parcel-type');
+  if (p.parcelType === 'Mobile Home') { ptEl.innerHTML = '🏠 Mobile / Manufactured'; ptEl.style.color = '#ffa726'; }
+  else if (p.parcelType)              { ptEl.textContent = p.parcelType; ptEl.style.color = ''; }
+  else                                { ptEl.textContent = '—'; ptEl.style.color = ''; }
+
+  // Satellite check status
+  const satEl = document.getElementById('d-sat');
+  const satNoteEl = document.getElementById('d-sat-note');
+  if (p.satelliteStatus === 'clear') {
+    satEl.innerHTML = '<span style="color:#66bb6a">✓ Roof clear</span>';
+    satNoteEl.style.display = 'none';
+  } else if (p.satelliteStatus === 'verify') {
+    satEl.innerHTML = '<span style="color:#ffa726">🟡 Verify at door</span>';
+    satNoteEl.textContent = p.satelliteNote || 'Satellite imagery may predate construction';
+    satNoteEl.style.display = 'block';
+  } else if (p.satelliteStatus === 'panels') {
+    satEl.innerHTML = '<span style="color:#f87171">🔴 Panels detected — SKIP</span>';
+    satNoteEl.textContent = p.satelliteNote || 'Already installed';
+    satNoteEl.style.display = 'block';
+  } else {
+    satEl.textContent = '—';
+    satNoteEl.style.display = 'none';
+  }
+
+  document.getElementById('d-description').textContent = p.description || '—';
+
+  // Map action links (address for Apple Maps, lat/lng for Google satellite)
+  const addrEnc = encodeURIComponent(p.address || '');
+  document.getElementById('d-apple').href = `https://maps.apple.com/?q=${addrEnc}&t=k`;
+  document.getElementById('d-gsat').href = `https://www.google.com/maps/@${p.lat},${p.lng},20z/data=!3m1!1e3`;
+
+  document.getElementById('d-notes').value = p.notes || '';
+
+  // Outcome buttons
+  document.querySelectorAll('.obtn').forEach(b => {
+    b.classList.toggle('active', b.dataset.outcome === p.outcome);
+    b.classList.toggle(b.dataset.outcome, b.dataset.outcome === p.outcome);
+  });
+
+  document.getElementById('detail').classList.add('open');
+}
+
+function closeDetail() {
+  // Belt-and-suspenders: flush any pending notes to state before tearing down.
+  flushNotesToState();
+  saveLocal();
+  currentDetailId = null;
+  document.getElementById('detail').classList.remove('open');
+  renderMarkers(); // refresh pins so dispositioned leads disappear / change color after close
+}
+
+/* ── Outcome button toggling (updates state in memory, not pushed until Update) ── */
+document.querySelectorAll('.obtn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (!currentDetailId) return;
+    const outcome = btn.dataset.outcome;
+    const p = state.permits.find(x => x.id === currentDetailId);
+    if (!p) return;
+    if (p.outcome === outcome) {
+      p.outcome = null;
+      p.outcomeDate = null;
+    } else {
+      p.outcome = outcome;
+      p.outcomeDate = new Date().toISOString();
+    }
+    // Update visual state of all outcome buttons
+    document.querySelectorAll('.obtn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.remove(b.dataset.outcome);
+    });
+    if (p.outcome) {
+      btn.classList.add('active');
+      btn.classList.add(p.outcome);
+    }
+    scheduleSave(); // localStorage only — pin re-renders on detail close
+  });
+});
+
+/* ── Notes save on every keystroke + on blur (localStorage only, no GitHub push) ──
+   Fires on every character typed so nothing is lost if the rep accidentally
+   closes the sheet, backgrounds the browser, or the phone restarts mid-note.
+   The debounce keeps localStorage writes cheap. */
+let _notesSaveTimer = null;
+function flushNotesToState() {
+  if (!currentDetailId) return;
+  const p = state.permits.find(x => x.id === currentDetailId);
+  if (!p) return;
+  p.notes = document.getElementById('d-notes').value;
+}
+document.getElementById('d-notes').addEventListener('input', () => {
+  flushNotesToState();
+  clearTimeout(_notesSaveTimer);
+  _notesSaveTimer = setTimeout(() => scheduleSave(), 400);
+});
+document.getElementById('d-notes').addEventListener('blur', () => {
+  flushNotesToState();
+  scheduleSave();
+});
+
+/* ── 💾 Update button: this is the ONLY thing that pushes to GitHub ── */
+async function saveAndPush() {
+  if (!currentDetailId) return;
+  const btn = document.getElementById('update-btn');
+  btn.disabled = true;
+  btn.textContent = 'Saving…';
+  // Make sure current notes are flushed to state
+  const p = state.permits.find(x => x.id === currentDetailId);
+  if (p) p.notes = document.getElementById('d-notes').value;
+  saveLocal();
+  await pushToGitHub();
+  btn.disabled = false;
+  btn.textContent = '💾 Update';
+  renderMarkers();
+  closeDetail();
+}
+
+/* ============================================================================
+   FILTERS
+   ============================================================================ */
+document.getElementById('filters').addEventListener('click', (e) => {
+  const b = e.target.closest('.fchip');
+  if (!b) return;
+  document.querySelectorAll('.fchip').forEach(x => x.classList.remove('active'));
+  b.classList.add('active');
+  activeFilter = b.dataset.filter;
+  renderMarkers();
+});
+
+/* ============================================================================
+   EMPTY STATE (shown when PERMITS_SEED is empty)
+   ============================================================================ */
+function maybeRenderEmptyState() {
+  if (state.permits.length === 0) {
+    const mapEl = document.getElementById('map');
+    const overlay = document.createElement('div');
+    overlay.style.cssText = 'position: absolute; inset: 0; background: rgba(15,17,23,0.95); z-index: 500; display: flex; align-items: center; justify-content: center; padding: 20px;';
+    overlay.innerHTML = `
+      <div class="empty-state" style="max-width: 400px;">
+        <h3>🏜 No permits loaded yet</h3>
+        <p>Pull solar permits from the <strong>Maricopa County Permit Center</strong> and add them to <code>PERMITS_SEED</code> in this file, then reload.</p>
+        <p style="margin-top: 12px; font-size: 11px;">Coverage: 85354 Tonopah · 85322 Arlington · 85326 Buckeye · 85361 Wittmann · 85342 Morristown.</p>
+        <p style="margin-top: 12px; font-size: 11px;">Hard rules: skip finaled permits, satellite-check roof before adding, cross-reference <code>tonopah-permit-state.json</code>.</p>
+      </div>
+    `;
+    mapEl.style.position = 'relative';
+    mapEl.appendChild(overlay);
+  }
+}
+
+
+/* ============================================================================
+   LIVE GPS — "where am I" blue dot for field use
+   Uses Leaflet's built-in locate(); no extra library. Requires HTTPS (Pages is).
+   ============================================================================ */
+let meMarker = null, meCircle = null, following = false, geoStarted = false;
+
+function setLocBtn(cls, glyph) {
+  const b = document.getElementById('locateBtn');
+  if (!b) return;
+  b.className = 'locate-btn' + (cls ? ' ' + cls : '');
+  if (glyph) b.textContent = glyph;
+}
+
+function startGeo() {
+  if (geoStarted) return;
+  geoStarted = true;
+  map.locate({ watch: true, enableHighAccuracy: true, maximumAge: 5000, timeout: 20000 });
+}
+
+function toggleFollow() {
+  startGeo();
+  following = !following;
+  setLocBtn(following ? 'following' : '', '◎');
+  if (following && meMarker) map.setView(meMarker.getLatLng(), Math.max(map.getZoom(), 16), { animate: false });
+}
+
+function onLocation(e) {
+  const ll = e.latlng;
+  if (!meMarker) {
+    meMarker = L.marker(ll, {
+      icon: L.divIcon({ className: 'me-wrap', html: '<div class="me-dot"></div>', iconSize: [18, 18], iconAnchor: [9, 9] }),
+      zIndexOffset: 1000, interactive: false,
+    }).addTo(map);
+    meCircle = L.circle(ll, { radius: e.accuracy || 30, color: '#1a73e8', weight: 1, opacity: .5, fillColor: '#1a73e8', fillOpacity: .10, interactive: false }).addTo(map);
+  } else {
+    meMarker.setLatLng(ll);
+    meCircle.setLatLng(ll).setRadius(e.accuracy || 30);
+  }
+  if (following) map.setView(ll, Math.max(map.getZoom(), 16), { animate: false });
+}
+
+function onLocationError(err) {
+  // code 1 = permission denied (fatal). 2 = position unavailable, 3 = timeout —
+  // both are routine in Tonopah dead zones, so keep follow mode and keep the last
+  // known dot on screen instead of yanking him out of follow while he is driving.
+  console.warn('geolocation', err && err.code, err && err.message);
+  if (err && err.code === 1) {
+    following = false;
+    setLocBtn('err', '⚠');
+    return;
+  }
+  setLocBtn(following ? 'following' : '', '◎');
+}
+
+function initGeo() {
+  map.on('locationfound', onLocation);
+  map.on('locationerror', onLocationError);
+  // A manual drag means he wants to browse — stop yanking the map back to him.
+  map.on('dragstart', function () { if (following) { following = false; setLocBtn('', '◎'); } });
+  startGeo();
+}
+
+/* ============================================================================
+   BOOT
+   ============================================================================ */
+(async function boot() {
+  initMap();
+  initGeo();
+  // Try local cache first for instant render, then reconcile with GitHub
+  try {
+    const local = JSON.parse(localStorage.getItem(LS_KEY) || 'null');
+    if (local && local.permits) {
+      state = local;
+      state.permits = mergePermits(PERMITS_SEED, local.permits);
+      renderMarkers();
+      setSyncStatus('', '↻ Local cache loaded — syncing…');
+    }
+  } catch {}
+  await loadFromGitHub();
+  renderMarkers();
+  maybeRenderEmptyState();
+})();
+</script>
+</body>
+</html>
