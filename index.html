@@ -195,7 +195,7 @@
   <div class="logo">Solar Resource USA</div>
   <h1>⚡ Wickenburg — New Installs</h1>
   <div class="sub">Town of Wickenburg · 85390 · monthly permit reports · APS</div>
-  <span class="zone">New installs · Built 2026-09-23 · 25 permits · 15 new PV · 10 not yet issued</span>
+  <span class="zone">New installs · Built 2026-09-23 · 25 permits · 15 new PV · 10 not issued as of last report</span>
 </div>
 
 <div id="sync-bar">⏳ Loading state from GitHub…</div>
@@ -363,181 +363,33 @@ function getGitHubPAT() {
    ============================================================================ */
 const PERMITS_SEED = [
  {
-  "id": "20260073",
-  "address": "1684 Verde Dr Wickenburg Az 85390",
-  "lat": 33.96082374901917,
-  "lng": -112.76477618078454,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "505-38-073A",
-  "valuation": 21000,
-  "systemKW": 15.0,
-  "systemKWSource": "permit description",
-  "kwUnknown": false,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "MCCLANAHAN CAROL LYNN",
-  "vesting": "MCCLANAHAN CAROL LYNN",
-  "leadName": "Carol Lynn McClanahan",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": "1684 VERDE DR, WICKENBURG AZ 85390",
-  "ownerOccupied": true,
-  "lastSold": "2024-05-01",
-  "lastSoldPrice": 350000,
-  "recentBuyer": false,
-  "lotSize": "0.18 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Battery add-on \u2014 home already has solar"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-3 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "1,897 sq ft"
-   ],
-   [
-    "Year built",
-    "1974"
-   ],
-   [
-    "Lot",
-    "0.18 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$278,000"
-   ],
-   [
-    "Permit scope",
-    "NEW ENERGY STORAGE SYSTEM (15 KWH)"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50538073A",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
-  "playType": "Battery add-on \u2014 home already has solar",
-  "contractor": "Capital Energy LLC",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260035",
-  "address": "1770 Yance Dr Wickenburg Az 85390",
-  "lat": 33.97757138862288,
-  "lng": -112.76699067991764,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "505-05-176",
-  "valuation": 37094.8,
-  "systemKW": 8.36,
-  "systemKWSource": "permit description",
-  "kwUnknown": false,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "LOWERY ROY/RHONDA",
-  "vesting": "LOWERY ROY/RHONDA",
-  "leadName": "Roy & Rhonda Lowery",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": "1770 YANCE DR, WICKENBURG AZ 85390",
-  "ownerOccupied": true,
-  "lastSold": "2025-12-01",
-  "lastSoldPrice": 364790,
-  "recentBuyer": true,
-  "lotSize": "0.28 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "New PV install"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-4 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "1,815 sq ft"
-   ],
-   [
-    "Year built",
-    "2026"
-   ],
-   [
-    "Lot",
-    "0.28 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$289,800"
-   ],
-   [
-    "Permit scope",
-    "Installation of a 8.360 kW rooftop mounted photovoltaic syst"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50505176",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "Sun Solar Solutions Inc",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
   "id": "20260339",
-  "address": "2005 W Highridge Rd Wickenburg Az 85390",
+  "address": "2005 W. Highridge Road Wickenburg Az 85390",
   "lat": 33.96763254737914,
   "lng": -112.77209819598039,
   "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
+  "parcel": "505-40-178",
+  "appliedMonth": "August",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied August \u2014 not issued",
   "status": "in review",
   "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
+  "ageDays": 26,
   "expire": null,
-  "ageDays": null,
-  "parcel": "505-40-178",
-  "valuation": 20200,
+  "finaled": null,
   "systemKW": 9.02,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Installation of a Roof Mount 9.02 kW Solar System with one (1) Tesla Powerwall 3 Battery.",
+  "valuation": 20200,
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "leadName": "Michael Pierce",
   "owner": "PIERCE MICHAEL J/EVELYN",
   "vesting": "PIERCE MICHAEL J/EVELYN",
-  "leadName": "Michael Pierce",
   "ownerType": null,
   "isTrust": false,
   "mailingAddress": "2005 W HIGHRIDGE RD, WICKENBURG AZ 85390",
@@ -551,6 +403,14 @@ const PERMITS_SEED = [
    [
     "Play",
     "New PV install"
+   ],
+   [
+    "Applied",
+    "August 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
    ],
    [
     "Property type",
@@ -581,47 +441,58 @@ const PERMITS_SEED = [
     "$678,200"
    ],
    [
+    "Contractor",
+    "ONEWORLDENERGY LLC dba Our World Energy"
+   ],
+   [
     "Permit scope",
     "Installation of a Roof Mount 9.02 kW Solar System with one ("
+   ],
+   [
+    "Assessor address",
+    "2005 W HIGHRIDGE RD"
    ]
   ],
   "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540178",
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "satelliteNote": "Applied August 2026 (permit #20260339 was numbered in the August report). NOT issued as of the August 2026 report \u2014 that report is ~26 days old, so it may have been issued since. Town publishes each permit in one monthly report only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
+  "isNew": true,
+  "navWarning": null
  },
  {
   "id": "20260321",
   "address": "2360 Grantham Hills Trail Wickenburg Az 85390",
   "lat": 34.0049969,
   "lng": -112.7536814,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Applied \u2014 not issued",
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-11-012B",
+  "appliedMonth": "July",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied July \u2014 not issued",
   "status": "in review",
   "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
+  "ageDays": 57,
   "expire": null,
-  "ageDays": null,
-  "parcel": "201-11-012B",
-  "valuation": 37928,
+  "finaled": null,
   "systemKW": 7.04,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
-  "owner": "The Bradbarrie Companies, LLC",
-  "vesting": "The Bradbarrie Companies, LLC",
+  "playType": "New PV install",
+  "desc": "Installation of a 7.04kW PV System with a Tesla PowerWall3 and a Tesla Backup Switch",
+  "valuation": 37928,
+  "contractor": "Icon Power",
   "leadName": "The Bradbarrie Companies, LLC",
-  "ownerType": "LLC",
+  "owner": "The Bradbarrie Companies, LLC",
+  "vesting": null,
+  "ownerType": null,
   "isTrust": false,
   "mailingAddress": null,
-  "ownerOccupied": false,
+  "ownerOccupied": null,
   "lastSold": null,
   "lastSoldPrice": null,
   "recentBuyer": false,
@@ -631,6 +502,18 @@ const PERMITS_SEED = [
    [
     "Play",
     "New PV install"
+   ],
+   [
+    "Applied",
+    "July 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Contractor",
+    "Icon Power"
    ],
    [
     "Permit scope",
@@ -639,185 +522,48 @@ const PERMITS_SEED = [
   ],
   "assessorLink": null,
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "Icon Power",
+  "satelliteNote": "Applied July 2026 (permit #20260321 was numbered in the July report). NOT issued as of the July 2026 report \u2014 that report is ~57 days old, so it may have been issued since. Town publishes each permit in one monthly report only. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260166",
-  "address": "2390 Lupine Ln Wickenburg Az 85390",
-  "lat": 33.97032698913396,
-  "lng": -112.78141041968426,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "505-40-469",
-  "valuation": 58472.4,
-  "systemKW": 17.22,
-  "systemKWSource": "permit description",
-  "kwUnknown": false,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "REVOCABLE TRUST OF JIM PRICE JR AND PEGGY ANNE PRICE",
-  "vesting": "REVOCABLE TRUST OF JIM PRICE JR AND PEGGY ANNE PRICE",
-  "leadName": "Jim & Peggy A. Price",
-  "ownerType": "Trust",
-  "isTrust": true,
-  "mailingAddress": "2390 LUPINE LN, WICKENBURG AZ 85390",
-  "ownerOccupied": true,
-  "lastSold": "2022-05-01",
-  "lastSoldPrice": 850000,
-  "recentBuyer": false,
-  "lotSize": "1.48 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "New PV install"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-4 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "2,017 sq ft"
-   ],
-   [
-    "Year built",
-    "2005"
-   ],
-   [
-    "Lot",
-    "1.48 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$535,700"
-   ],
-   [
-    "Permit scope",
-    "Solar Install 17.22kW (42 Modules, 1 Inverter, 1 Battery)"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540469",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "Freedom Forever Arizona LLC",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260353",
-  "address": "2705 W. Percheron Road Wickenburg Az 85390",
-  "lat": 33.968705541257094,
-  "lng": -112.78912942791547,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "505-41-103",
-  "valuation": 27900,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": false,
-  "batteryModel": null,
-  "owner": "MONTY BALDWIN TRUST",
-  "vesting": "MONTY BALDWIN TRUST",
-  "leadName": "Monty Baldwin Trust",
-  "ownerType": "Trust",
-  "isTrust": true,
-  "mailingAddress": "PO BOX 1011, RENO NV 89504",
-  "ownerOccupied": false,
-  "lastSold": "2026-03-01",
-  "lastSoldPrice": 215000,
-  "recentBuyer": true,
-  "lotSize": "1.31 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Other / unclear"
-   ],
-   [
-    "Property type",
-    "VACANT RESIDENTIAL URBAN SUBDIVIDE"
-   ],
-   [
-    "Lot",
-    "1.31 ac"
-   ],
-   [
-    "County value",
-    "$117,700"
-   ],
-   [
-    "Permit scope",
-    "Ground-Mount Tracker"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50541103",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "Other / unclear",
-  "contractor": "EVX Solar",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
+  "isNew": true,
+  "navWarning": null
  },
  {
   "id": "20260257",
-  "address": "29296 N 70Th Ave Wickenburg Az 85390",
-  "lat": 33.749688303726145,
-  "lng": -112.21117068708425,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
+  "address": "4264 Ponderosa Trail Wickenburg Az 85390",
+  "lat": 34.038511,
+  "lng": -112.810793,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-03-357 (does not resolve to a Wickenburg parcel \u2014 unverified)",
+  "appliedMonth": "May",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied May \u2014 not issued",
   "status": "in review",
   "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
+  "ageDays": 118,
   "expire": null,
-  "ageDays": null,
-  "parcel": "201-03-357",
-  "valuation": 14300,
+  "finaled": null,
   "systemKW": 3.28,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
-  "owner": "LI BAO-JHEN/FU KUAN-LIN",
-  "vesting": "LI BAO-JHEN/FU KUAN-LIN",
+  "playType": "New PV install",
+  "desc": "Installation of a Roof Mount 3.28 kW Solar System with one (1) Tesla Powerwall 3 Battery.",
+  "valuation": 14300,
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
   "leadName": "Terry J. Eberhardt & Cynthia D. Burgess-Eberhardt",
+  "owner": "Terry J. Eberhardt & Cynthia D. Burgess-Eberhardt",
+  "vesting": null,
   "ownerType": null,
   "isTrust": false,
-  "mailingAddress": "29296 N 70TH AVE, PEORIA AZ 85383",
-  "ownerOccupied": true,
-  "lastSold": "2026-06-01",
-  "lastSoldPrice": 590000,
-  "recentBuyer": true,
-  "lotSize": "0.19 ac",
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
   "parcelType": "residential",
   "extraFacts": [
    [
@@ -825,387 +571,66 @@ const PERMITS_SEED = [
     "New PV install"
    ],
    [
-    "Property type",
-    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+    "Applied",
+    "May 2026"
    ],
    [
-    "Livable area",
-    "2,315 sq ft"
+    "Issued",
+    "Not issued as of report"
    ],
    [
-    "Year built",
-    "2018"
-   ],
-   [
-    "Lot",
-    "0.19 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$544,200"
+    "Contractor",
+    "ONEWORLDENERGY LLC dba Our World Energy"
    ],
    [
     "Permit scope",
     "Installation of a Roof Mount 3.28 kW Solar System with one ("
    ]
   ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20103357",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260210",
-  "address": "29789 N 71St Dr Wickenburg Az 85390",
-  "lat": 33.754653881260786,
-  "lng": -112.2129940952041,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "201-03-155",
-  "valuation": 14581,
-  "systemKW": 6.15,
-  "systemKWSource": "permit description",
-  "kwUnknown": false,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "CRUZ ALBERT TOM/ELIZABETH MAY",
-  "vesting": "CRUZ ALBERT TOM/ELIZABETH MAY",
-  "leadName": "Stanley Krosnowski Jr. & Leslie Krosnowski",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": "29789 N 71ST DR, PEORIA AZ 85383",
-  "ownerOccupied": true,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": "0.18 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "New PV install"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-3 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "2,165 sq ft"
-   ],
-   [
-    "Year built",
-    "2005"
-   ],
-   [
-    "Lot",
-    "0.18 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "Pool",
-    "Yes"
-   ],
-   [
-    "County value",
-    "$468,500"
-   ],
-   [
-    "Permit scope",
-    "Roof-mounted photovoltaic and energy storage system (6.150 K"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20103155",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "Capital Energy LLC",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260044",
-  "address": "3246 Maverick Drive Wickenburg Az 85390",
-  "lat": 34.0225669,
-  "lng": -112.8005409,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "201-02-467A",
-  "valuation": 30000,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "Gregory C. & Kathryn L. Palmquist",
-  "vesting": "Gregory C. & Kathryn L. Palmquist",
-  "leadName": "Gregory C. & Kathryn L. Palmquist",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": null,
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": null,
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Battery add-on \u2014 home already has solar"
-   ],
-   [
-    "Permit scope",
-    "Installation of 3 backup batteries"
-   ]
-  ],
   "assessorLink": null,
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
-  "playType": "Battery add-on \u2014 home already has solar",
-  "contractor": "WNT LLC dba First Electric",
+  "satelliteNote": "Applied May 2026 (permit #20260257 was numbered in the May report). NOT issued as of the May 2026 report \u2014 that report is ~118 days old, so it may have been issued since. Town publishes each permit in one monthly report only. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260158",
-  "address": "3616 Turquoise Trail Wickenburg Az 85390",
-  "lat": 34.043303,
-  "lng": -112.807844,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "201-03-215A",
-  "valuation": 27780,
-  "systemKW": 14.96,
-  "systemKWSource": "permit description",
-  "kwUnknown": false,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "Bryan & Sheri Cloe",
-  "vesting": "Bryan & Sheri Cloe",
-  "leadName": "Bryan & Sheri Cloe",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": null,
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": null,
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "New PV install"
-   ],
-   [
-    "Permit scope",
-    "Install 14.96 kW Solar System with Energy Storage"
-   ]
-  ],
-  "assessorLink": null,
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "Green Muscle Solar LLC",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260087",
-  "address": "4277 Greenhorn Way Wickenburg Az 85390",
-  "lat": 34.0392645,
-  "lng": -112.8066518,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "201-03-249A",
-  "valuation": 38400,
-  "systemKW": 14.08,
-  "systemKWSource": "permit description",
-  "kwUnknown": false,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "Daniel J. & Melissa A. Subitch",
-  "vesting": "Daniel J. & Melissa A. Subitch",
-  "leadName": "Daniel J. & Melissa A. Subitch",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": null,
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": null,
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "New PV install"
-   ],
-   [
-    "Permit scope",
-    "Roof mounted 14.08kW solar system with Tesla Powerwall 3 bat"
-   ]
-  ],
-  "assessorLink": null,
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "United Energy Partners LLC",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260011",
-  "address": "6942 W Buckhorn Trl Wickenburg Az 85390",
-  "lat": 33.73121718378047,
-  "lng": -112.20825129669358,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "201-31-180",
-  "valuation": 16600,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "YEH MIN LUN",
-  "vesting": "YEH MIN LUN",
-  "leadName": "Teresa Brown & Philip Carl Brown",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": "6942 W BUCKHORN TRL, PEORIA AZ 85383",
-  "ownerOccupied": true,
-  "lastSold": "2025-12-01",
-  "lastSoldPrice": 610000,
-  "recentBuyer": true,
-  "lotSize": "0.15 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Battery add-on \u2014 home already has solar"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-4 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "2,084 sq ft"
-   ],
-   [
-    "Year built",
-    "2026"
-   ],
-   [
-    "Lot",
-    "0.15 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$549,700"
-   ],
-   [
-    "Permit scope",
-    "Installation of battery storage system."
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20131180",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
-  "playType": "Battery add-on \u2014 home already has solar",
-  "contractor": "Sun Solar Solutions Inc",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
+  "isNew": true,
+  "navWarning": null
  },
  {
   "id": "20260213",
-  "address": "7142 W Nadine Way Wickenburg Az 85390",
-  "lat": 33.75252392231866,
-  "lng": -112.21332540379083,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
+  "address": "4330 Copperhead Drive Wickenburg Az 85390",
+  "lat": 34.0396305,
+  "lng": -112.7937526,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-03-175 (does not resolve to a Wickenburg parcel \u2014 unverified)",
+  "appliedMonth": "April",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied April \u2014 not issued",
   "status": "in review",
   "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
+  "ageDays": 148,
   "expire": null,
-  "ageDays": null,
-  "parcel": "201-03-175",
-  "valuation": 27014,
+  "finaled": null,
   "systemKW": 10.56,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
-  "owner": "FIDEL GONZALEZ JR LIVING TRUST",
-  "vesting": "FIDEL GONZALEZ JR LIVING TRUST",
+  "playType": "New PV install",
+  "desc": "Installation of a 10.56kW PV System with a Tesla PowerWall3 and a Tesla Backup Safety Switch",
+  "valuation": 27014,
+  "contractor": "Icon Power",
   "leadName": "Ernest L. Decarlo",
-  "ownerType": "Trust",
-  "isTrust": true,
-  "mailingAddress": "7142 W NADINE WAY, PEORIA AZ 85383",
-  "ownerOccupied": true,
+  "owner": "Ernest L. Decarlo",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
   "lastSold": null,
   "lastSoldPrice": null,
   "recentBuyer": false,
-  "lotSize": "0.2 ac",
+  "lotSize": null,
   "parcelType": "residential",
   "extraFacts": [
    [
@@ -1213,84 +638,146 @@ const PERMITS_SEED = [
     "New PV install"
    ],
    [
-    "Property type",
-    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+    "Applied",
+    "April 2026"
    ],
    [
-    "Livable area",
-    "2,873 sq ft"
+    "Issued",
+    "Not issued as of report"
    ],
    [
-    "Year built",
-    "2005"
-   ],
-   [
-    "Lot",
-    "0.2 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "Pool",
-    "Yes"
-   ],
-   [
-    "County value",
-    "$524,300"
+    "Contractor",
+    "Icon Power"
    ],
    [
     "Permit scope",
     "Installation of a 10.56kW PV System with a Tesla PowerWall3 "
    ]
   ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=20103175",
+  "assessorLink": null,
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "Icon Power",
+  "satelliteNote": "Applied April 2026 (permit #20260213 was numbered in the April report). NOT issued as of the April 2026 report \u2014 that report is ~148 days old, so it may have been issued since. Town publishes each permit in one monthly report only. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
+  "isNew": true,
+  "navWarning": null
+ },
+ {
+  "id": "20260210",
+  "address": "4162 Copperhead Drive Wickenburg Az 85390",
+  "lat": 34.0363071,
+  "lng": -112.7925033,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-03-155 (does not resolve to a Wickenburg parcel \u2014 unverified)",
+  "appliedMonth": "April",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied April \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 148,
+  "expire": null,
+  "finaled": null,
+  "systemKW": 6.15,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Roof-mounted photovoltaic and energy storage system (6.150 KW DC) with (15) panels and (1) Tesla Powerwall 3 with (1) Tesla Backup Switch",
+  "valuation": 14581,
+  "contractor": "Capital Energy LLC",
+  "leadName": "Stanley Krosnowski Jr. & Leslie Krosnowski",
+  "owner": "Stanley Krosnowski Jr. & Leslie Krosnowski",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Applied",
+    "April 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Contractor",
+    "Capital Energy LLC"
+   ],
+   [
+    "Permit scope",
+    "Roof-mounted photovoltaic and energy storage system (6.150 K"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied April 2026 (permit #20260210 was numbered in the April report). NOT issued as of the April 2026 report \u2014 that report is ~148 days old, so it may have been issued since. Town publishes each permit in one monthly report only. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true,
+  "navWarning": null
  },
  {
   "id": "20260208",
-  "address": "720 Bralliar Rd Wickenburg Az 85390",
+  "address": "720 Bralliar Road Wickenburg Az 85390",
   "lat": 33.981470586438995,
   "lng": -112.74460838741018,
   "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
+  "parcel": "505-07-038A",
+  "appliedMonth": "April",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied April \u2014 not issued",
   "status": "in review",
   "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
+  "ageDays": 148,
   "expire": null,
-  "ageDays": null,
-  "parcel": "505-07-038A",
-  "valuation": 13600,
+  "finaled": null,
   "systemKW": 2.46,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Installation of a Roof Mount 2.46 kW Solar System with one (1) Tesla Powerwall 3 Battery, designed in compliance with NEC 705.13 using panel limits and PCS programming.",
+  "valuation": 13600,
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "leadName": "Diana J. Schneider",
   "owner": "SCHNEIDER DIANA J",
   "vesting": "SCHNEIDER DIANA J",
-  "leadName": "Diana J. Schneider",
   "ownerType": null,
   "isTrust": false,
   "mailingAddress": "720 BRALLIAR RD, WICKENBURG AZ 85390",
   "ownerOccupied": true,
   "lastSold": "2025-12-01",
   "lastSoldPrice": 150000,
-  "recentBuyer": true,
+  "recentBuyer": false,
   "lotSize": "0.56 ac",
   "parcelType": "residential",
   "extraFacts": [
    [
     "Play",
     "New PV install"
+   ],
+   [
+    "Applied",
+    "April 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
    ],
    [
     "Property type",
@@ -1317,355 +804,62 @@ const PERMITS_SEED = [
     "$384,500"
    ],
    [
+    "Contractor",
+    "ONEWORLDENERGY LLC dba Our World Energy"
+   ],
+   [
     "Permit scope",
     "Installation of a Roof Mount 2.46 kW Solar System with one ("
+   ],
+   [
+    "Assessor address",
+    "720 BRALLIAR RD"
    ]
   ],
   "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50507038A",
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "New PV install",
-  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "satelliteNote": "Applied April 2026 (permit #20260208 was numbered in the April report). NOT issued as of the April 2026 report \u2014 that report is ~148 days old, so it may have been issued since. Town publishes each permit in one monthly report only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
+  "isNew": true,
+  "navWarning": null
  },
  {
-  "id": "20260139",
-  "address": "870 W Santa Fe Dr Wickenburg Az 85390",
-  "lat": 33.97310887713387,
-  "lng": -112.74686695564952,
+  "id": "20260166",
+  "address": "2390 Lupine Lane Wickenburg Az 85390",
+  "lat": 33.97032698913396,
+  "lng": -112.78141041968426,
   "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
+  "parcel": "505-40-469",
+  "appliedMonth": "March",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied March \u2014 not issued",
   "status": "in review",
   "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
+  "ageDays": 179,
   "expire": null,
-  "ageDays": null,
-  "parcel": "505-06-075",
-  "valuation": 24000,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "HUSEMANN FAMILY TRUST",
-  "vesting": "HUSEMANN FAMILY TRUST",
-  "leadName": "Husemann Family Trust",
-  "ownerType": "Trust",
-  "isTrust": true,
-  "mailingAddress": "870 W SANTA FE DR, WICKENBURG AZ 85390",
-  "ownerOccupied": true,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": "0.33 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Battery add-on \u2014 home already has solar"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-3 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "1,510 sq ft"
-   ],
-   [
-    "Year built",
-    "1996"
-   ],
-   [
-    "Lot",
-    "0.33 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$364,800"
-   ],
-   [
-    "Permit scope",
-    "Addition of a Tesla PowerWall3 and a Tesla Backup Safety Swi"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506075",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
-  "playType": "Battery add-on \u2014 home already has solar",
-  "contractor": "Icon Power",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260122",
-  "address": "875 N John Burden Ln Wickenburg Az 85390",
-  "lat": 33.975853997364226,
-  "lng": -112.72326440759355,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
   "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "505-12-023D",
-  "valuation": 57200,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "DOYLE FAMILY TRUST",
-  "vesting": "DOYLE FAMILY TRUST",
-  "leadName": "Doyle Family Trust",
-  "ownerType": "Trust",
-  "isTrust": true,
-  "mailingAddress": "875 N JOHN BURDEN LN, WICKENBURG AZ 85390",
-  "ownerOccupied": true,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": "2.02 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Battery add-on \u2014 home already has solar"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-3 URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "1,663 sq ft"
-   ],
-   [
-    "Year built",
-    "1986"
-   ],
-   [
-    "Lot",
-    "2.02 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$434,700"
-   ],
-   [
-    "Permit scope",
-    "Installation of 2 battery storage systems and 2 battery syst"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50512023D",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started. NOTE: this is a battery add-on, the home already has solar.",
-  "playType": "Battery add-on \u2014 home already has solar",
-  "contractor": "Sun Solar Solutions Inc",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260354",
-  "address": "925 W Bralliar Rd Wickenburg Az 85390",
-  "lat": 33.980910016281186,
-  "lng": -112.74933654378266,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Applied \u2014 not issued",
-  "status": "in review",
-  "bucket": "purple",
-  "applied": null,
-  "issued": "",
-  "finaled": null,
-  "expire": null,
-  "ageDays": null,
-  "parcel": "505-06-001D",
-  "valuation": 26500,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": false,
-  "batteryModel": null,
-  "owner": "CRISSMAN SAMUEL/BRENDA",
-  "vesting": "CRISSMAN SAMUEL/BRENDA",
-  "leadName": "Samuel & Brenda Crissman",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": "PO BOX 1360, WICKENBURG AZ 85358",
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": "5.91 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Other / unclear"
-   ],
-   [
-    "Property type",
-    "SFR ON > 5 AC, URBAN SUBDIVIDED"
-   ],
-   [
-    "Livable area",
-    "3,661 sq ft"
-   ],
-   [
-    "Year built",
-    "2025"
-   ],
-   [
-    "Lot",
-    "5.91 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$1,039,200"
-   ],
-   [
-    "Permit scope",
-    "Ground-Mount Tracker"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506001D",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit applied but not yet issued \u2014 nothing installed yet, competitor has not started.",
-  "playType": "Other / unclear",
-  "contractor": "EVX Solar",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": true
- },
- {
-  "id": "20260308",
-  "address": "1220 Easy St Wickenburg Az 85390",
-  "lat": 33.98387300144685,
-  "lng": -112.76142530836348,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Issued",
-  "status": "issued",
-  "bucket": "orange",
-  "applied": null,
-  "issued": "2026-07-06",
-  "finaled": null,
-  "expire": null,
-  "ageDays": 79,
-  "parcel": "505-05-003Q",
-  "valuation": 7707,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": false,
-  "batteryModel": null,
-  "owner": "KUHNS JARED M/RANDI L",
-  "vesting": "KUHNS JARED M/RANDI L",
-  "leadName": "Jared M. & Randi L. Kuhns",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": "1220 EASY ST, WICKENBURG AZ 85390",
-  "ownerOccupied": true,
-  "lastSold": "2024-12-01",
-  "lastSoldPrice": 458285,
-  "recentBuyer": false,
-  "lotSize": "1.17 ac",
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Service / alteration \u2014 not a new install"
-   ],
-   [
-    "Property type",
-    "SFR GRADE 010-4 RURAL NON-SUBDIVID"
-   ],
-   [
-    "Livable area",
-    "1,632 sq ft"
-   ],
-   [
-    "Year built",
-    "1993"
-   ],
-   [
-    "Lot",
-    "1.17 ac"
-   ],
-   [
-    "Cooling",
-    "RF - REFRIGERATION"
-   ],
-   [
-    "County value",
-    "$400,500"
-   ],
-   [
-    "Permit scope",
-    "Sun Valley Solar to remove existing APS owned inverter and o"
-   ]
-  ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50505003Q",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway. NOTE: service/alteration permit, not a new install.",
-  "playType": "Service / alteration \u2014 not a new install",
-  "contractor": "Sun Valley Solar Solutions LLC",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
- },
- {
-  "id": "20260310",
-  "address": "2995 W Pinto Pl Wickenburg Az 85390",
-  "lat": 33.963381140336665,
-  "lng": -112.79213718936805,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Issued",
-  "status": "issued",
-  "bucket": "orange",
-  "applied": null,
-  "issued": "2026-07-13",
-  "finaled": null,
-  "expire": null,
-  "ageDays": 72,
-  "parcel": "505-40-235",
-  "valuation": 20000,
-  "systemKW": 8.8,
+  "systemKW": 17.22,
   "systemKWSource": "permit description",
   "kwUnknown": false,
-  "battery": false,
+  "battery": true,
   "batteryModel": null,
-  "owner": "WARRICK REVOCABLE TRUST",
-  "vesting": "WARRICK REVOCABLE TRUST",
-  "leadName": "Warrick Revocable Trust",
-  "ownerType": "Trust",
-  "isTrust": true,
-  "mailingAddress": "2995 W PINTO PL, WICKENBURG AZ 85390",
+  "playType": "New PV install",
+  "desc": "Solar Install 17.22kW (42 Modules, 1 Inverter, 1 Battery)",
+  "valuation": 58472.4,
+  "contractor": "Freedom Forever Arizona LLC",
+  "leadName": "Jim & Peggy A. Price",
+  "owner": "REVOCABLE TRUST OF JIM PRICE JR AND PEGGY ANNE PRICE",
+  "vesting": "REVOCABLE TRUST OF JIM PRICE JR AND PEGGY ANNE PRICE",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "2390 LUPINE LN, WICKENBURG AZ 85390",
   "ownerOccupied": true,
-  "lastSold": "2025-06-01",
-  "lastSoldPrice": 950000,
+  "lastSold": "2022-05-01",
+  "lastSoldPrice": 850000,
   "recentBuyer": false,
-  "lotSize": "1.19 ac",
+  "lotSize": "1.48 ac",
   "parcelType": "residential",
   "extraFacts": [
    [
@@ -1673,20 +867,28 @@ const PERMITS_SEED = [
     "New PV install"
    ],
    [
+    "Applied",
+    "March 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
     "Property type",
-    "SFR GRADE 010-4 RURAL SUBDIVIDED"
+    "SFR GRADE 010-4 URBAN SUBDIVIDED"
    ],
    [
     "Livable area",
-    "2,542 sq ft"
+    "2,017 sq ft"
    ],
    [
     "Year built",
-    "2020"
+    "2005"
    ],
    [
     "Lot",
-    "1.19 ac"
+    "1.48 ac"
    ],
    [
     "Cooling",
@@ -1694,54 +896,199 @@ const PERMITS_SEED = [
    ],
    [
     "County value",
-    "$864,000"
+    "$535,700"
+   ],
+   [
+    "Contractor",
+    "Freedom Forever Arizona LLC"
    ],
    [
     "Permit scope",
-    "Installation of rooftop solar, system size 8.8kW"
+    "Solar Install 17.22kW (42 Modules, 1 Inverter, 1 Battery)"
+   ],
+   [
+    "Assessor address",
+    "2390 LUPINE LN"
    ]
   ],
-  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540235",
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540469",
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway.",
-  "playType": "New PV install",
-  "contractor": "Aneva Solar LLC",
+  "satelliteNote": "Applied March 2026 (permit #20260166 was numbered in the March report). NOT issued as of the March 2026 report \u2014 that report is ~179 days old, so it may have been issued since. Town publishes each permit in one monthly report only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
+  "isNew": true,
+  "navWarning": null
  },
  {
-  "id": "20260007",
-  "address": "3703 Desert Oasis Avenue Wickenburg Az 85390",
-  "lat": 34.0281113,
-  "lng": -112.797627,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Issued",
-  "status": "issued",
-  "bucket": "orange",
-  "applied": null,
-  "issued": "2026-01-14",
-  "finaled": null,
+  "id": "20260158",
+  "address": "3616 Turquoise Trail Wickenburg Az 85390",
+  "lat": 34.043303,
+  "lng": -112.807844,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-03-215A",
+  "appliedMonth": "March",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied March \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 179,
   "expire": null,
-  "ageDays": 252,
-  "parcel": "201-02-853",
-  "valuation": 17556,
+  "finaled": null,
+  "systemKW": 14.96,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Install 14.96 kW Solar System with Energy Storage",
+  "valuation": 27780,
+  "contractor": "Green Muscle Solar LLC",
+  "leadName": "Bryan & Sheri Cloe",
+  "owner": "Bryan & Sheri Cloe",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Applied",
+    "March 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Contractor",
+    "Green Muscle Solar LLC"
+   ],
+   [
+    "Permit scope",
+    "Install 14.96 kW Solar System with Energy Storage"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied March 2026 (permit #20260158 was numbered in the March report). NOT issued as of the March 2026 report \u2014 that report is ~179 days old, so it may have been issued since. Town publishes each permit in one monthly report only. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true,
+  "navWarning": null
+ },
+ {
+  "id": "20260087",
+  "address": "4277 Greenhorn Way Wickenburg Az 85390",
+  "lat": 34.0392645,
+  "lng": -112.8066518,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-03-249A",
+  "appliedMonth": "February",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied February \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 207,
+  "expire": null,
+  "finaled": null,
+  "systemKW": 14.08,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Roof mounted 14.08kW solar system with Tesla Powerwall 3 battery.",
+  "valuation": 38400,
+  "contractor": "United Energy Partners LLC",
+  "leadName": "Daniel J. & Melissa A. Subitch",
+  "owner": "Daniel J. & Melissa A. Subitch",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Applied",
+    "February 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Contractor",
+    "United Energy Partners LLC"
+   ],
+   [
+    "Permit scope",
+    "Roof mounted 14.08kW solar system with Tesla Powerwall 3 bat"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied February 2026 (permit #20260087 was numbered in the February report). NOT issued as of the February 2026 report \u2014 that report is ~207 days old, so it may have been issued since. Town publishes each permit in one monthly report only. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": true,
+  "navWarning": null
+ },
+ {
+  "id": "20260035",
+  "address": "1770 Yance Drive Wickenburg Az 85390",
+  "lat": 33.97757138862288,
+  "lng": -112.76699067991764,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-05-176",
+  "appliedMonth": "January",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied January \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 238,
+  "expire": null,
+  "finaled": null,
   "systemKW": 8.36,
   "systemKWSource": "permit description",
   "kwUnknown": false,
-  "battery": false,
+  "battery": true,
   "batteryModel": null,
-  "owner": "Alan D. & Carol Jo Butler",
-  "vesting": "Alan D. & Carol Jo Butler",
-  "leadName": "Alan D. & Carol Jo Butler",
+  "playType": "New PV install",
+  "desc": "Installation of a 8.360 kW rooftop mounted photovoltaic system with 175A derate and battery storage system.",
+  "valuation": 37094.8,
+  "contractor": "Sun Solar Solutions Inc",
+  "leadName": "Roy & Rhonda Lowery",
+  "owner": "LOWERY ROY/RHONDA",
+  "vesting": "LOWERY ROY/RHONDA",
   "ownerType": null,
   "isTrust": false,
-  "mailingAddress": null,
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
+  "mailingAddress": "1770 YANCE DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2025-12-01",
+  "lastSoldPrice": 364790,
   "recentBuyer": false,
-  "lotSize": null,
+  "lotSize": "0.28 ac",
   "parcelType": "residential",
   "extraFacts": [
    [
@@ -1749,147 +1096,86 @@ const PERMITS_SEED = [
     "New PV install"
    ],
    [
-    "Permit scope",
-    "Install 8.36kW PV Solar"
-   ]
-  ],
-  "assessorLink": null,
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway.",
-  "playType": "New PV install",
-  "contractor": "Bright Home Installations LLC dba Bright Home Energy",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
- },
- {
-  "id": "20260225",
-  "address": "4502 Painted Wagon Way Wickenburg Az 85390",
-  "lat": 34.0438368,
-  "lng": -112.8081651,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Issued",
-  "status": "issued",
-  "bucket": "orange",
-  "applied": null,
-  "issued": "2026-05-26",
-  "finaled": null,
-  "expire": null,
-  "ageDays": 120,
-  "parcel": "201-03-198A",
-  "valuation": 16632,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "William & Deborah A. Longo",
-  "vesting": "William & Deborah A. Longo",
-  "leadName": "William & Deborah A. Longo",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": null,
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": null,
-  "parcelType": "residential",
-  "extraFacts": [
+    "Applied",
+    "January 2026"
+   ],
    [
-    "Play",
-    "New PV install"
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,815 sq ft"
+   ],
+   [
+    "Year built",
+    "2026"
+   ],
+   [
+    "Lot",
+    "0.28 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$289,800"
+   ],
+   [
+    "Contractor",
+    "Sun Solar Solutions Inc"
    ],
    [
     "Permit scope",
-    "Installation of roof mounted utility interactive PV and ESS"
-   ]
-  ],
-  "assessorLink": null,
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway.",
-  "playType": "New PV install",
-  "contractor": "Bright Home Installations LLC dba Bright Home Energy",
-  "source": "Town of Wickenburg monthly permit report",
-  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
- },
- {
-  "id": "20260115",
-  "address": "4565 Fletcher Court Wickenburg Az 85390",
-  "lat": 34.0439179,
-  "lng": -112.8042878,
-  "coordSource": "ROOFTOP",
-  "statusLabel": "Issued",
-  "status": "issued",
-  "bucket": "orange",
-  "applied": null,
-  "issued": "2026-03-23",
-  "finaled": null,
-  "expire": null,
-  "ageDays": 184,
-  "parcel": "201-31-244",
-  "valuation": 7911,
-  "systemKW": null,
-  "systemKWSource": null,
-  "kwUnknown": true,
-  "battery": true,
-  "batteryModel": null,
-  "owner": "Paul D. & Veronica D. Hackenbrack",
-  "vesting": "Paul D. & Veronica D. Hackenbrack",
-  "leadName": "Paul D. & Veronica D. Hackenbrack",
-  "ownerType": null,
-  "isTrust": false,
-  "mailingAddress": null,
-  "ownerOccupied": false,
-  "lastSold": null,
-  "lastSoldPrice": null,
-  "recentBuyer": false,
-  "lotSize": null,
-  "parcelType": "residential",
-  "extraFacts": [
-   [
-    "Play",
-    "Service / alteration \u2014 not a new install"
+    "Installation of a 8.360 kW rooftop mounted photovoltaic syst"
    ],
    [
-    "Permit scope",
-    "Install Tesla Powerwall 3 with Tesla Expansion pack and a su"
+    "Assessor address",
+    "1770 YANCE DR"
    ]
   ],
-  "assessorLink": null,
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50505176",
   "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway. NOTE: service/alteration permit, not a new install.",
-  "playType": "Service / alteration \u2014 not a new install",
-  "contractor": "Sun Valley Solar Solutions LLC",
+  "satelliteNote": "Applied January 2026 (permit #20260035 was numbered in the January report). NOT issued as of the January 2026 report \u2014 that report is ~238 days old, so it may have been issued since. Town publishes each permit in one monthly report only.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
+  "isNew": true,
+  "navWarning": null
  },
  {
   "id": "20260314",
-  "address": "516 N Mariposa Dr Wickenburg Az 85390",
+  "address": "516 N. Mariposa Drive Wickenburg Az 85390",
   "lat": 33.97178007320417,
   "lng": -112.7459211212393,
   "coordSource": "assessor parcel centroid",
-  "statusLabel": "Issued",
+  "parcel": "505-06-032",
+  "appliedMonth": "July",
+  "appliedDate": null,
+  "issued": "2026-07-15",
+  "statusLabel": "Issued 2026-07-15",
   "status": "issued",
   "bucket": "orange",
-  "applied": null,
-  "issued": "2026-07-15",
-  "finaled": null,
+  "ageDays": 57,
   "expire": null,
-  "ageDays": 70,
-  "parcel": "505-06-032",
-  "valuation": 14300,
+  "finaled": null,
   "systemKW": 3.24,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Installation of a Roof Mount 3.24 kW Solar System with one (1) Tesla Powerwall 3 Battery.",
+  "valuation": 14300,
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "leadName": "Doug L. McDonald",
   "owner": "MCDONALD DOUG L",
   "vesting": "MCDONALD DOUG L",
-  "leadName": "Doug L. McDonald",
   "ownerType": null,
   "isTrust": false,
   "mailingAddress": "516 N MARIPOSA DR, WICKENBURG AZ 85390",
@@ -1903,6 +1189,14 @@ const PERMITS_SEED = [
    [
     "Play",
     "New PV install"
+   ],
+   [
+    "Applied",
+    "July 2026"
+   ],
+   [
+    "Issued",
+    "2026-07-15"
    ],
    [
     "Property type",
@@ -1933,43 +1227,216 @@ const PERMITS_SEED = [
     "$372,600"
    ],
    [
+    "Contractor",
+    "ONEWORLDENERGY LLC dba Our World Energy"
+   ],
+   [
     "Permit scope",
     "Installation of a Roof Mount 3.24 kW Solar System with one ("
+   ],
+   [
+    "Assessor address",
+    "516 N MARIPOSA DR"
    ]
   ],
   "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506032",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway.",
-  "playType": "New PV install",
-  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied July 2026 (permit #20260314 was numbered in the July report). Issued 2026-07-15.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260310",
+  "address": "2995 W. Pinto Place Wickenburg Az 85390",
+  "lat": 33.963381140336665,
+  "lng": -112.79213718936805,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-40-235",
+  "appliedMonth": "July",
+  "appliedDate": null,
+  "issued": "2026-07-13",
+  "statusLabel": "Issued 2026-07-13",
+  "status": "issued",
+  "bucket": "orange",
+  "ageDays": 57,
+  "expire": null,
+  "finaled": null,
+  "systemKW": 8.8,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": false,
+  "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Installation of rooftop solar, system size 8.8kW",
+  "valuation": 20000,
+  "contractor": "Aneva Solar LLC",
+  "leadName": "Warrick Revocable Trust",
+  "owner": "WARRICK REVOCABLE TRUST",
+  "vesting": "WARRICK REVOCABLE TRUST",
+  "ownerType": null,
+  "isTrust": true,
+  "mailingAddress": "2995 W PINTO PL, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2025-06-01",
+  "lastSoldPrice": 950000,
+  "recentBuyer": false,
+  "lotSize": "1.19 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Applied",
+    "July 2026"
+   ],
+   [
+    "Issued",
+    "2026-07-13"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 RURAL SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "2,542 sq ft"
+   ],
+   [
+    "Year built",
+    "2020"
+   ],
+   [
+    "Lot",
+    "1.19 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$864,000"
+   ],
+   [
+    "Contractor",
+    "Aneva Solar LLC"
+   ],
+   [
+    "Permit scope",
+    "Installation of rooftop solar, system size 8.8kW"
+   ],
+   [
+    "Assessor address",
+    "2995 W PINTO PL"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540235",
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied July 2026 (permit #20260310 was numbered in the July report). Issued 2026-07-13.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260225",
+  "address": "4502 Painted Wagon Way Wickenburg Az 85390",
+  "lat": 34.0438368,
+  "lng": -112.8081651,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-03-198A",
+  "appliedMonth": "May",
+  "appliedDate": null,
+  "issued": "2026-05-26",
+  "statusLabel": "Issued 2026-05-26",
+  "status": "issued",
+  "bucket": "orange",
+  "ageDays": 118,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Installation of roof mounted utility interactive PV and ESS",
+  "valuation": 16632,
+  "contractor": "Bright Home Installations LLC dba Bright Home Energy",
+  "leadName": "William & Deborah A. Longo",
+  "owner": "William & Deborah A. Longo",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Applied",
+    "May 2026"
+   ],
+   [
+    "Issued",
+    "2026-05-26"
+   ],
+   [
+    "Contractor",
+    "Bright Home Installations LLC dba Bright Hom"
+   ],
+   [
+    "Permit scope",
+    "Installation of roof mounted utility interactive PV and ESS"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied May 2026 (permit #20260225 was numbered in the May report). Issued 2026-05-26. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
  },
  {
   "id": "20260123",
-  "address": "721 Weaver St Wickenburg Az 85390",
+  "address": "741 Weaver Street Wickenburg Az 85390",
   "lat": 33.97478370974558,
   "lng": -112.73285961187344,
   "coordSource": "assessor parcel centroid",
-  "statusLabel": "Issued",
+  "parcel": "505-09-063",
+  "appliedMonth": "March",
+  "appliedDate": null,
+  "issued": "2026-03-25",
+  "statusLabel": "Issued 2026-03-25",
   "status": "issued",
   "bucket": "orange",
-  "applied": null,
-  "issued": "2026-03-25",
-  "finaled": null,
+  "ageDays": 179,
   "expire": null,
-  "ageDays": 182,
-  "parcel": "505-09-063",
-  "valuation": 24250,
+  "finaled": null,
   "systemKW": 14.35,
   "systemKWSource": "permit description",
   "kwUnknown": false,
   "battery": true,
   "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Installation of a Roof Mount 14.35 kW Solar System with one (1) Tesla Powerwall 3 Battery, designed in compliance with NEC 705.13 using panel limits and PCS programming.",
+  "valuation": 24250,
+  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "leadName": "Daniel Kaufman",
   "owner": "MOYER AMANDA/FISHER JEREMY",
   "vesting": "MOYER AMANDA/FISHER JEREMY",
-  "leadName": "Daniel Kaufman",
   "ownerType": null,
   "isTrust": false,
   "mailingAddress": "721 WEAVER ST, WICKENBURG AZ 85390",
@@ -1983,6 +1450,14 @@ const PERMITS_SEED = [
    [
     "Play",
     "New PV install"
+   ],
+   [
+    "Applied",
+    "March 2026"
+   ],
+   [
+    "Issued",
+    "2026-03-25"
    ],
    [
     "Property type",
@@ -2009,44 +1484,810 @@ const PERMITS_SEED = [
     "$204,700"
    ],
    [
+    "Contractor",
+    "ONEWORLDENERGY LLC dba Our World Energy"
+   ],
+   [
     "Permit scope",
     "Installation of a Roof Mount 14.35 kW Solar System with one "
+   ],
+   [
+    "Assessor address",
+    "721 WEAVER ST"
    ]
   ],
   "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50509063",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway.",
-  "playType": "New PV install",
-  "contractor": "ONEWORLDENERGY LLC dba Our World Energy",
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied March 2026 (permit #20260123 was numbered in the March report). Issued 2026-03-25.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
+  "isNew": false,
+  "navWarning": null
  },
  {
-  "id": "20260288",
-  "address": "825 S 337Th Ave Wickenburg Az 85390",
-  "lat": 33.95779478403378,
-  "lng": -112.78420130512447,
-  "coordSource": "assessor parcel centroid",
-  "statusLabel": "Issued",
+  "id": "20260007",
+  "address": "3703 Desert Oasis Avenue Wickenburg Az 85390",
+  "lat": 34.0281113,
+  "lng": -112.797627,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-02-853",
+  "appliedMonth": "January",
+  "appliedDate": null,
+  "issued": "2026-01-14",
+  "statusLabel": "Issued 2026-01-14",
   "status": "issued",
   "bucket": "orange",
-  "applied": null,
-  "issued": "2026-06-18",
-  "finaled": null,
+  "ageDays": 238,
   "expire": null,
-  "ageDays": 97,
-  "parcel": "505-40-017D",
-  "valuation": 14985,
+  "finaled": null,
+  "systemKW": 8.36,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": false,
+  "batteryModel": null,
+  "playType": "New PV install",
+  "desc": "Install 8.36kW PV Solar",
+  "valuation": 17556,
+  "contractor": "Bright Home Installations LLC dba Bright Home Energy",
+  "leadName": "Alan D. & Carol Jo Butler",
+  "owner": "Alan D. & Carol Jo Butler",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "New PV install"
+   ],
+   [
+    "Applied",
+    "January 2026"
+   ],
+   [
+    "Issued",
+    "2026-01-14"
+   ],
+   [
+    "Contractor",
+    "Bright Home Installations LLC dba Bright Hom"
+   ],
+   [
+    "Permit scope",
+    "Install 8.36kW PV Solar"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied January 2026 (permit #20260007 was numbered in the January report). Issued 2026-01-14. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260354",
+  "address": "925 W. Bralliar Road Wickenburg Az 85390",
+  "lat": 33.980910016281186,
+  "lng": -112.74933654378266,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-06-001D",
+  "appliedMonth": "August",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied August \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 26,
+  "expire": null,
+  "finaled": null,
   "systemKW": null,
   "systemKWSource": null,
   "kwUnknown": true,
   "battery": false,
   "batteryModel": null,
+  "playType": "Other / unclear",
+  "desc": "Ground-Mount Tracker",
+  "valuation": 26500,
+  "contractor": "EVX Solar",
+  "leadName": "Samuel & Brenda Crissman",
+  "owner": "CRISSMAN SAMUEL/BRENDA",
+  "vesting": "CRISSMAN SAMUEL/BRENDA",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "PO BOX 1360, WICKENBURG AZ 85358",
+  "ownerOccupied": false,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "5.91 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Other / unclear"
+   ],
+   [
+    "Applied",
+    "August 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Property type",
+    "SFR ON > 5 AC, URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "3,661 sq ft"
+   ],
+   [
+    "Year built",
+    "2025"
+   ],
+   [
+    "Lot",
+    "5.91 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$1,039,200"
+   ],
+   [
+    "Contractor",
+    "EVX Solar"
+   ],
+   [
+    "Permit scope",
+    "Ground-Mount Tracker"
+   ],
+   [
+    "Assessor address",
+    "925 W BRALLIAR RD"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506001D",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied August 2026 (permit #20260354 was numbered in the August report). NOT issued as of the August 2026 report \u2014 that report is ~26 days old, so it may have been issued since. Town publishes each permit in one monthly report only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260353",
+  "address": "2705 W. Percheron Road Wickenburg Az 85390",
+  "lat": 33.968705541257094,
+  "lng": -112.78912942791547,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-41-103",
+  "appliedMonth": "August",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied August \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 26,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "playType": "Other / unclear",
+  "desc": "Ground-Mount Tracker",
+  "valuation": 27900,
+  "contractor": "EVX Solar",
+  "leadName": "Monty Baldwin Trust",
+  "owner": "MONTY BALDWIN TRUST",
+  "vesting": "MONTY BALDWIN TRUST",
+  "ownerType": null,
+  "isTrust": true,
+  "mailingAddress": "PO BOX 1011, RENO NV 89504",
+  "ownerOccupied": false,
+  "lastSold": "2026-03-01",
+  "lastSoldPrice": 215000,
+  "recentBuyer": false,
+  "lotSize": "1.31 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Other / unclear"
+   ],
+   [
+    "Applied",
+    "August 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Property type",
+    "VACANT RESIDENTIAL URBAN SUBDIVIDE"
+   ],
+   [
+    "Lot",
+    "1.31 ac"
+   ],
+   [
+    "County value",
+    "$117,700"
+   ],
+   [
+    "Contractor",
+    "EVX Solar"
+   ],
+   [
+    "Permit scope",
+    "Ground-Mount Tracker"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50541103",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied August 2026 (permit #20260353 was numbered in the August report). NOT issued as of the August 2026 report \u2014 that report is ~26 days old, so it may have been issued since. Town publishes each permit in one monthly report only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260139",
+  "address": "870 W. Santa Fe Drive Wickenburg Az 85390",
+  "lat": 33.97310887713387,
+  "lng": -112.74686695564952,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-06-075",
+  "appliedMonth": "March",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied March \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 179,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "Battery add-on \u2014 home already has solar",
+  "desc": "Addition of a Tesla PowerWall3 and a Tesla Backup Safety Switch",
+  "valuation": 24000,
+  "contractor": "Icon Power",
+  "leadName": "Husemann Family Trust",
+  "owner": "HUSEMANN FAMILY TRUST",
+  "vesting": "HUSEMANN FAMILY TRUST",
+  "ownerType": null,
+  "isTrust": true,
+  "mailingAddress": "870 W SANTA FE DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "0.33 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Applied",
+    "March 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,510 sq ft"
+   ],
+   [
+    "Year built",
+    "1996"
+   ],
+   [
+    "Lot",
+    "0.33 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$364,800"
+   ],
+   [
+    "Contractor",
+    "Icon Power"
+   ],
+   [
+    "Permit scope",
+    "Addition of a Tesla PowerWall3 and a Tesla Backup Safety Swi"
+   ],
+   [
+    "Assessor address",
+    "870 W SANTA FE DR"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50506075",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied March 2026 (permit #20260139 was numbered in the March report). NOT issued as of the March 2026 report \u2014 that report is ~179 days old, so it may have been issued since. Town publishes each permit in one monthly report only. NOTE: battery add-on \u2014 home already has solar.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260122",
+  "address": "875 N. John Burden Lane Wickenburg Az 85390",
+  "lat": 33.975853997364226,
+  "lng": -112.72326440759355,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-12-023D",
+  "appliedMonth": "March",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied March \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 179,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "Battery add-on \u2014 home already has solar",
+  "desc": "Installation of 2 battery storage systems and 2 battery system expansions.",
+  "valuation": 57200,
+  "contractor": "Sun Solar Solutions Inc",
+  "leadName": "Doyle Family Trust",
+  "owner": "DOYLE FAMILY TRUST",
+  "vesting": "DOYLE FAMILY TRUST",
+  "ownerType": null,
+  "isTrust": true,
+  "mailingAddress": "875 N JOHN BURDEN LN, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": "2.02 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Applied",
+    "March 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,663 sq ft"
+   ],
+   [
+    "Year built",
+    "1986"
+   ],
+   [
+    "Lot",
+    "2.02 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$434,700"
+   ],
+   [
+    "Contractor",
+    "Sun Solar Solutions Inc"
+   ],
+   [
+    "Permit scope",
+    "Installation of 2 battery storage systems and 2 battery syst"
+   ],
+   [
+    "Assessor address",
+    "875 N JOHN BURDEN LN"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50512023D",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied March 2026 (permit #20260122 was numbered in the March report). NOT issued as of the March 2026 report \u2014 that report is ~179 days old, so it may have been issued since. Town publishes each permit in one monthly report only. NOTE: battery add-on \u2014 home already has solar.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260073",
+  "address": "1684 Verde Drive Wickenburg Az 85390",
+  "lat": 33.96082374901917,
+  "lng": -112.76477618078454,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-38-073A",
+  "appliedMonth": "February",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied February \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 207,
+  "expire": null,
+  "finaled": null,
+  "systemKW": 15.0,
+  "systemKWSource": "permit description",
+  "kwUnknown": false,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "Battery add-on \u2014 home already has solar",
+  "desc": "NEW ENERGY STORAGE SYSTEM (15 KWH)",
+  "valuation": 21000,
+  "contractor": "Capital Energy LLC",
+  "leadName": "Carol Lynn McClanahan",
+  "owner": "MCCLANAHAN CAROL LYNN",
+  "vesting": "MCCLANAHAN CAROL LYNN",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "1684 VERDE DR, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2024-05-01",
+  "lastSoldPrice": 350000,
+  "recentBuyer": false,
+  "lotSize": "0.18 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Applied",
+    "February 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-3 URBAN SUBDIVIDED"
+   ],
+   [
+    "Livable area",
+    "1,897 sq ft"
+   ],
+   [
+    "Year built",
+    "1974"
+   ],
+   [
+    "Lot",
+    "0.18 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$278,000"
+   ],
+   [
+    "Contractor",
+    "Capital Energy LLC"
+   ],
+   [
+    "Permit scope",
+    "NEW ENERGY STORAGE SYSTEM (15 KWH)"
+   ],
+   [
+    "Assessor address",
+    "1684 VERDE DR"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50538073A",
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied February 2026 (permit #20260073 was numbered in the February report). NOT issued as of the February 2026 report \u2014 that report is ~207 days old, so it may have been issued since. Town publishes each permit in one monthly report only. NOTE: battery add-on \u2014 home already has solar.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260044",
+  "address": "3246 Maverick Drive Wickenburg Az 85390",
+  "lat": 34.0225669,
+  "lng": -112.8005409,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-02-467A",
+  "appliedMonth": "January",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied January \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 238,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "Battery add-on \u2014 home already has solar",
+  "desc": "Installation of 3 backup batteries",
+  "valuation": 30000,
+  "contractor": "WNT LLC dba First Electric",
+  "leadName": "Gregory C. & Kathryn L. Palmquist",
+  "owner": "Gregory C. & Kathryn L. Palmquist",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Applied",
+    "January 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Contractor",
+    "WNT LLC dba First Electric"
+   ],
+   [
+    "Permit scope",
+    "Installation of 3 backup batteries"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied January 2026 (permit #20260044 was numbered in the January report). NOT issued as of the January 2026 report \u2014 that report is ~238 days old, so it may have been issued since. Town publishes each permit in one monthly report only. NOTE: battery add-on \u2014 home already has solar. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260011",
+  "address": "4335 Noble Drive Wickenburg Az 85390",
+  "lat": 34.0395191,
+  "lng": -112.8010985,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-31-180 (does not resolve to a Wickenburg parcel \u2014 unverified)",
+  "appliedMonth": "January",
+  "appliedDate": null,
+  "issued": null,
+  "statusLabel": "Applied January \u2014 not issued",
+  "status": "in review",
+  "bucket": "purple",
+  "ageDays": 238,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "Battery add-on \u2014 home already has solar",
+  "desc": "Installation of battery storage system.",
+  "valuation": 16600,
+  "contractor": "Sun Solar Solutions Inc",
+  "leadName": "Teresa Brown & Philip Carl Brown",
+  "owner": "Teresa Brown & Philip Carl Brown",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Battery add-on \u2014 home already has solar"
+   ],
+   [
+    "Applied",
+    "January 2026"
+   ],
+   [
+    "Issued",
+    "Not issued as of report"
+   ],
+   [
+    "Contractor",
+    "Sun Solar Solutions Inc"
+   ],
+   [
+    "Permit scope",
+    "Installation of battery storage system."
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "clear",
+  "satelliteNote": "Applied January 2026 (permit #20260011 was numbered in the January report). NOT issued as of the January 2026 report \u2014 that report is ~238 days old, so it may have been issued since. Town publishes each permit in one monthly report only. NOTE: battery add-on \u2014 home already has solar. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260308",
+  "address": "1220 Easy Street Wickenburg Az 85390",
+  "lat": 33.98387300144685,
+  "lng": -112.76142530836348,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-05-003Q",
+  "appliedMonth": "July",
+  "appliedDate": null,
+  "issued": "2026-07-06",
+  "statusLabel": "Issued 2026-07-06",
+  "status": "issued",
+  "bucket": "orange",
+  "ageDays": 57,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "playType": "Service / alteration \u2014 not a new install",
+  "desc": "Sun Valley Solar to remove existing APS owned inverter and optimizers. Sun Valley Solar is installing new APS owned Enphase dedicated der system combiner panel and APS owned Enphase Micro-Inverters.",
+  "valuation": 7707,
+  "contractor": "Sun Valley Solar Solutions LLC",
+  "leadName": "Jared M. & Randi L. Kuhns",
+  "owner": "KUHNS JARED M/RANDI L",
+  "vesting": "KUHNS JARED M/RANDI L",
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": "1220 EASY ST, WICKENBURG AZ 85390",
+  "ownerOccupied": true,
+  "lastSold": "2024-12-01",
+  "lastSoldPrice": 458285,
+  "recentBuyer": false,
+  "lotSize": "1.17 ac",
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Service / alteration \u2014 not a new install"
+   ],
+   [
+    "Applied",
+    "July 2026"
+   ],
+   [
+    "Issued",
+    "2026-07-06"
+   ],
+   [
+    "Property type",
+    "SFR GRADE 010-4 RURAL NON-SUBDIVID"
+   ],
+   [
+    "Livable area",
+    "1,632 sq ft"
+   ],
+   [
+    "Year built",
+    "1993"
+   ],
+   [
+    "Lot",
+    "1.17 ac"
+   ],
+   [
+    "Cooling",
+    "RF - REFRIGERATION"
+   ],
+   [
+    "County value",
+    "$400,500"
+   ],
+   [
+    "Contractor",
+    "Sun Valley Solar Solutions LLC"
+   ],
+   [
+    "Permit scope",
+    "Sun Valley Solar to remove existing APS owned inverter and o"
+   ],
+   [
+    "Assessor address",
+    "1220 EASY ST"
+   ]
+  ],
+  "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50505003Q",
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied July 2026 (permit #20260308 was numbered in the July report). Issued 2026-07-06. NOTE: service/alteration permit, not a new install.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260288",
+  "address": "825 S. 337Th Avenue Wickenburg Az 85390",
+  "lat": 33.95779478403378,
+  "lng": -112.78420130512447,
+  "coordSource": "assessor parcel centroid",
+  "parcel": "505-40-017D",
+  "appliedMonth": "June",
+  "appliedDate": null,
+  "issued": "2026-06-18",
+  "statusLabel": "Issued 2026-06-18",
+  "status": "issued",
+  "bucket": "orange",
+  "ageDays": 87,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": false,
+  "batteryModel": null,
+  "playType": "Service / alteration \u2014 not a new install",
+  "desc": "This is a DC coupled system using the backup switch.",
+  "valuation": 14985,
+  "contractor": "Sun Valley Solar Solutions LLC",
+  "leadName": "Anderson Family Trust",
   "owner": "ANDERSON FAMILY TR",
   "vesting": "ANDERSON FAMILY TR",
-  "leadName": "Anderson Family Trust",
-  "ownerType": "Trust",
+  "ownerType": null,
   "isTrust": true,
   "mailingAddress": "PO BOX 20675, WICKENBURG AZ 85358",
   "ownerOccupied": false,
@@ -2059,6 +2300,14 @@ const PERMITS_SEED = [
    [
     "Play",
     "Service / alteration \u2014 not a new install"
+   ],
+   [
+    "Applied",
+    "June 2026"
+   ],
+   [
+    "Issued",
+    "2026-06-18"
    ],
    [
     "Property type",
@@ -2089,18 +2338,92 @@ const PERMITS_SEED = [
     "$562,100"
    ],
    [
+    "Contractor",
+    "Sun Valley Solar Solutions LLC"
+   ],
+   [
     "Permit scope",
     "This is a DC coupled system using the backup switch."
+   ],
+   [
+    "Assessor address",
+    "825 S 337TH AVE"
    ]
   ],
   "assessorLink": "https://mcassessor.maricopa.gov/mcs/?q=50540017D",
-  "satelliteStatus": "clear",
-  "satelliteNote": "Permit issued \u2014 install may be underway. NOTE: service/alteration permit, not a new install.",
-  "playType": "Service / alteration \u2014 not a new install",
-  "contractor": "Sun Valley Solar Solutions LLC",
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied June 2026 (permit #20260288 was numbered in the June report). Issued 2026-06-18. NOTE: service/alteration permit, not a new install.",
   "source": "Town of Wickenburg monthly permit report",
   "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
-  "isNew": false
+  "isNew": false,
+  "navWarning": null
+ },
+ {
+  "id": "20260115",
+  "address": "4565 Fletcher Court Wickenburg Az 85390",
+  "lat": 34.0439179,
+  "lng": -112.8042878,
+  "coordSource": "geocoded (Wickenburg-verified)",
+  "parcel": "201-31-244",
+  "appliedMonth": "March",
+  "appliedDate": null,
+  "issued": "2026-03-23",
+  "statusLabel": "Issued 2026-03-23",
+  "status": "issued",
+  "bucket": "orange",
+  "ageDays": 179,
+  "expire": null,
+  "finaled": null,
+  "systemKW": null,
+  "systemKWSource": null,
+  "kwUnknown": true,
+  "battery": true,
+  "batteryModel": null,
+  "playType": "Service / alteration \u2014 not a new install",
+  "desc": "Install Tesla Powerwall 3 with Tesla Expansion pack and a sub panel. This is an AC coupled system using the backup switch and remote meter.",
+  "valuation": 7911,
+  "contractor": "Sun Valley Solar Solutions LLC",
+  "leadName": "Paul D. & Veronica D. Hackenbrack",
+  "owner": "Paul D. & Veronica D. Hackenbrack",
+  "vesting": null,
+  "ownerType": null,
+  "isTrust": false,
+  "mailingAddress": null,
+  "ownerOccupied": null,
+  "lastSold": null,
+  "lastSoldPrice": null,
+  "recentBuyer": false,
+  "lotSize": null,
+  "parcelType": "residential",
+  "extraFacts": [
+   [
+    "Play",
+    "Service / alteration \u2014 not a new install"
+   ],
+   [
+    "Applied",
+    "March 2026"
+   ],
+   [
+    "Issued",
+    "2026-03-23"
+   ],
+   [
+    "Contractor",
+    "Sun Valley Solar Solutions LLC"
+   ],
+   [
+    "Permit scope",
+    "Install Tesla Powerwall 3 with Tesla Expansion pack and a su"
+   ]
+  ],
+  "assessorLink": null,
+  "satelliteStatus": "check",
+  "satelliteNote": "Applied March 2026 (permit #20260115 was numbered in the March report). Issued 2026-03-23. NOTE: service/alteration permit, not a new install. County assessor record could not be matched to this parcel \u2014 owner/property facts are from the town permit only.",
+  "source": "Town of Wickenburg monthly permit report",
+  "portalUrl": "https://wickenburgaz.gov/DocumentCenter/Index/372",
+  "isNew": false,
+  "navWarning": null
  }
 ];
 
@@ -2480,6 +2803,14 @@ function openDetail(id) {
   if (p.recentBuyer) tags += '<span style="background:#2e0d2e;color:#f0abfc;border:1px solid #5c0a5c;border-radius:5px;padding:1px 6px;">RECENT BUYER</span>';
   tagsEl.innerHTML = tags;
   (function(){
+    var old=document.getElementById('d-navwarn'); if(old) old.remove();
+    if(!p.navWarning) return;
+    var host=document.getElementById('d-leadtags'); if(!host) return;
+    var w=document.createElement('div'); w.id='d-navwarn'; w.textContent=p.navWarning;
+    w.style.cssText='margin-top:8px;padding:7px 9px;background:#3a2a0d;border:1px solid #5c3d0a;border-radius:6px;color:#fbbf24;font-size:12px;line-height:1.35;';
+    host.parentNode.insertBefore(w,host.nextSibling);
+  })();
+  (function(){
     var host=document.getElementById('d-leadtags'); if(!host) return;
     var old=document.getElementById('d-extrafacts'); if(old) old.remove();
     if(!p.extraFacts||!p.extraFacts.length) return;
@@ -2555,7 +2886,7 @@ function openDetail(id) {
 
   // Map action links (address for Apple Maps, lat/lng for Google satellite)
   const addrEnc = encodeURIComponent(p.address || '');
-  document.getElementById('d-apple').href = `https://maps.apple.com/?q=${addrEnc}&t=k`;
+  document.getElementById('d-apple').href = `https://maps.apple.com/?ll=${p.lat},${p.lng}&q=${addrEnc}&t=k`;
   document.getElementById('d-gsat').href = `https://www.google.com/maps/@${p.lat},${p.lng},20z/data=!3m1!1e3`;
 
   document.getElementById('d-notes').value = p.notes || '';
